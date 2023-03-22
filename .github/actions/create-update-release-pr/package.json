@@ -1,0 +1,14 @@
+{
+    "name": "create-update-release-pr-action",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "author": "Shopify",
+    "license": "MIT",
+    "dependencies": {
+      "@actions/core": "^1.10.0",
+      "@actions/exec": "^1.1.1",
+      "@actions/github": "^5.1.1",
+      "octokit-plugin-create-pull-request": "^4.1.1"
+    }
+  }

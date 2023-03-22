@@ -1,0 +1,45 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+  run-changesets:
+    name: Run changeset actions
+    runs-on: shopify-ubuntu-latest
+    outputs:
+      changeset-has-changed: ${{ steps.check-changesets-change.outputs.changed }}
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.ACCESS_TOKEN }}
+
+      - name: Free up space on GitHub image
+        run: |
+          # Based on the official advice:
+          # https://github.com/actions/virtual-environments/issues/2840#issuecomment-790492173
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /opt/ghc
+          sudo rm -rf "/usr/local/share/boost"
+          sudo rm -rf "$AGENT_TOOLSDIRECTORY"
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+
+      - name: Check for changeset
+        id: check_changesets_change
+        run: npx @changesets/cli status --since="origin/main"
+
+      - name: Create or update Release PR
+        id: create_update_release_branch
+        if: steps.check_changesets_change.outcome != 'failure'
+        uses: ./.github/actions/create-update-release-pr/action.yml
+        with:
+          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+
