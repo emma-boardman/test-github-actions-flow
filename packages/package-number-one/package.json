@@ -1,0 +1,13 @@
+{
+    "name": "@mini-monorepo/package-number-one",
+    "version": "1.0.0",
+    "main": "index.js",
+    "repository": "https://github.com/emma-boardman/test-github-actions-flow.git",
+    "author": "Emma Boardman <emma.boardman@shopify.com>",
+    "license": "MIT",
+    "private": true,
+    "workspaces": [
+      "packages/*"
+    ]
+  }
+  
