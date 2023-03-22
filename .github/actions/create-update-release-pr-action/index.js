@@ -47,7 +47,7 @@ const main = async () => {
 
 function getCommitFiles(versionFiles) {
   const files = versionFiles.split(/\r?\n/);
-  const sanitisedFiles = Array.from(files, (file: any) => {
+  const sanitisedFiles = Array.from(files, (file) => {
     const fileArray = file.split(/[ ]/);
     return fileArray.pop();
   });
