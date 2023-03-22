@@ -39,7 +39,7 @@ jobs:
       - name: Create or update Release PR
         id: create_update_release_branch
         if: steps.check_changesets_change.outcome != 'failure'
-        uses: .github/actions/create-update-release-pr/action
+        uses: ./.github/actions/create-update-release-pr/action
         with:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
 
