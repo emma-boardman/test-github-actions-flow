@@ -38,11 +38,11 @@ const main = async () => {
         ],
       });
 
-       await octokit.rest.issues.addLabels({
-      ...context.repo,
-      labels: 'Version Package',
-      issue_number: data.number,
-    });
+    //    await octokit.rest.issues.addLabels({
+    //   ...context.repo,
+    //   labels: 'Version Package',
+    //   issue_number: data.number,
+    // });
 
 
 
@@ -79,11 +79,11 @@ function getCommitFiles(versionFiles) {
 
     return {
       ...obj,
-      [fileName]: "File content goes here"
-      // [fileName]: ({encoding, content}) => {
-      //   // updates file based on current content
-      //   return Buffer.from(content, encoding).toString('utf-8');
-      // },
+      // [fileName]: "File content goes here"
+      [fileName]: ({encoding, content}) => {
+        // updates file based on current content
+        return Buffer.from(content, encoding).toString('utf-8');
+      },
     };
   }, {});
 
