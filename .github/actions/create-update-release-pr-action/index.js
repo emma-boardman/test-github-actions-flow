@@ -1,6 +1,5 @@
 const {getOctokitOptions, GitHub} = require('@actions/github/lib/utils');
 const core = require('@actions/core');
-const exec = require('@actions/exec');
 const github = require('@actions/github');
 const {createPullRequest} = require('octokit-plugin-create-pull-request');
 
@@ -12,14 +11,7 @@ const main = async () => {
 
   const octokit = new Octokit(getOctokitOptions(token));
 
-  console.log('github context', context);
-  console.log("Octokit", Octokit);
-  console.log('octokit', octokit);
-
   const commitMessage = 'Version Packages';
-
-    console.log('Running npx changeset version');
-    await exec.exec('npx changeset version');
 
     console.log('Running git status check');
     const versionFiles = exec.exec('git', ['status', '--porcelain']);
@@ -30,32 +22,32 @@ const main = async () => {
     console.log('Result of getPRDesc', getPRDescription());
 
 
-    console.log('running octokit create PR');
-    const {data} = await octokit.createPullRequest({
-      ...context.repo,
-      title: commitMessage,
-      body: getPRDescription(),
-      head: `changesets-release/main`,
-      createWhenEmpty: false,
-      update: true,
-      changes: [
-        {
-          commit: commitMessage,
-          files: getCommitFiles(versionFiles),
-        },
-      ],
-      emptyCommit: false,
-    });
+    // console.log('running octokit create PR');
+    // const {data} = await octokit.createPullRequest({
+    //   ...context.repo,
+    //   title: commitMessage,
+    //   body: getPRDescription(),
+    //   head: `changesets-release/main`,
+    //   createWhenEmpty: false,
+    //   update: true,
+    //   changes: [
+    //     {
+    //       commit: commitMessage,
+    //       files: getCommitFiles(versionFiles),
+    //     },
+    //   ],
+    //   emptyCommit: false,
+    // });
 
-    console.log('Result of create PR', data);
+    // console.log('Result of create PR', data);
 
-    await octokit.rest.issues.addLabels({
-      ...context.repo,
-      labels: 'Version Package',
-      issue_number: data.number,
-    });
+    // await octokit.rest.issues.addLabels({
+    //   ...context.repo,
+    //   labels: 'Version Package',
+    //   issue_number: data.number,
+    // });
 
-    return data.number;
+    // return data.number;
   
 };
 
