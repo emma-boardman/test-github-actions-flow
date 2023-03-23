@@ -80,9 +80,13 @@ function getCommitFiles(versionFiles) {
     return {
       ...obj,
       // [fileName]: "File content goes here"
-      [fileName]: ({encoding, content}) => {
+      [fileName]: ({exists, encoding, content}) => {
+        if (!exists) return null;
+        
         // updates file based on current content
-        return Buffer.from(content, encoding).toString('utf-8');
+        return Buffer.from(content, encoding)
+          .toString("utf-8")
+          .toUpperCase();
       },
     };
   }, {});
