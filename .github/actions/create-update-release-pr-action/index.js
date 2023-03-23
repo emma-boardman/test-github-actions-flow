@@ -16,19 +16,13 @@ const main = async () => {
 
     console.log('Running git status check');
     const versionFiles = await hasGitStatusChanged();
-
-    // console.log("type", typeof versionFiles);
-
-
-    // console.log('Result:', versionFiles);
-
     if (versionFiles.length > 0) {
       console.log("File changes detected.");
 
 
       console.log('running octokit create PR');
 
-      console.log('context.repo', context.repo);
+
 
       const {data} = await octokit.createPullRequest({
         ...context.repo,
@@ -40,36 +34,22 @@ const main = async () => {
         changes: [
           {
             commit: commitMessage,
-            files: {
-              "path/to/file1.txt": "Content for file1",
-              ".changeset/magenta-moon-swim.md": "tra la la",
-              "packages/package-number-two/src/components/Button/Button.tsx": "override?"
-
-            },
+            files: getCommitFiles(versionFiles),
             emptyCommit: false,
           },
         ],
       });
 
+       await octokit.rest.issues.addLabels({
+      ...context.repo,
+      labels: 'Version Package',
+      issue_number: data.number,
+    });
 
-      // const {data} = await octokit.createPullRequest({
-      //   ...context.repo,
-      //   title: commitMessage,
-      //   body: getPRDescription(),
-      //   head: `changesets-release/main`,
-      //   createWhenEmpty: false,
-      //   update: true,
-      //   changes: [
-      //     {
-      //       commit: commitMessage,
-      //       files: getCommitFiles(versionFiles),
-      //     },
-      //   ],
-      //   emptyCommit: false,
-      // });
 
-      console.log("data", data)
-      return data;
+
+      console.log("Succesfully created/updated PR #", data)
+      return data.number;
     
     } else {
        console.log('exiting....')
@@ -77,15 +57,6 @@ const main = async () => {
     
 
 
-    // console.log('Result of create PR', data);
-
-    // await octokit.rest.issues.addLabels({
-    //   ...context.repo,
-    //   labels: 'Version Package',
-    //   issue_number: data.number,
-    // });
-
-    // return data.number;
   
 };
 
