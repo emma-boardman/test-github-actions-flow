@@ -12,13 +12,25 @@ const main = async () => {
 
   const octokit = new Octokit(getOctokitOptions(token));
 
+  console.log('github context', context);
+  console.log("Octokit", Octokit);
+  console.log('octokit', octokit);
+
   const commitMessage = 'Version Packages';
 
-  async function main() {
+    console.log('Running npx changeset version');
     await exec.exec('npx changeset version');
 
+    console.log('Running git status check');
     const versionFiles = exec.exec('git', ['status', '--porcelain']);
 
+    console.log('Result:', versionFiles);
+
+    console.log('Result of getCommitFiles', getCommitFiles(versionFiles));
+    console.log('Result of getPRDesc', getPRDescription());
+
+
+    console.log('running octokit create PR');
     const {data} = await octokit.createPullRequest({
       ...context.repo,
       title: commitMessage,
@@ -35,6 +47,8 @@ const main = async () => {
       emptyCommit: false,
     });
 
+    console.log('Result of create PR', data);
+
     await octokit.rest.issues.addLabels({
       ...context.repo,
       labels: 'Version Package',
@@ -42,7 +56,7 @@ const main = async () => {
     });
 
     return data.number;
-  }
+  
 };
 
 function getCommitFiles(versionFiles) {
