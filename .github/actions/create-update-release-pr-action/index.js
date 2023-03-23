@@ -27,21 +27,41 @@ const main = async () => {
 
 
       console.log('running octokit create PR');
+
+      console.log('context.repo', context.repo);
+
       const {data} = await octokit.createPullRequest({
         ...context.repo,
         title: commitMessage,
         body: getPRDescription(),
         head: `changesets-release/main`,
-        createWhenEmpty: false,
         update: true,
         changes: [
           {
-            commit: commitMessage,
-            files: getCommitFiles(versionFiles),
+            commit: "Creating a commit on a new branch",
+            "path/to/file1.txt": "Content for file1",
+            ".changeset/hungry-wombat-stand.md": "Content for file"
           },
         ],
         emptyCommit: false,
       });
+
+
+      // const {data} = await octokit.createPullRequest({
+      //   ...context.repo,
+      //   title: commitMessage,
+      //   body: getPRDescription(),
+      //   head: `changesets-release/main`,
+      //   createWhenEmpty: false,
+      //   update: true,
+      //   changes: [
+      //     {
+      //       commit: commitMessage,
+      //       files: getCommitFiles(versionFiles),
+      //     },
+      //   ],
+      //   emptyCommit: false,
+      // });
 
       console.log("data", data)
       return data;
