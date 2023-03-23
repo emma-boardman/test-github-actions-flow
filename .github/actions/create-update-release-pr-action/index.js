@@ -19,8 +19,7 @@ const main = async () => {
     if (versionFiles.length > 0) {
       console.log("File changes detected.");
 
-
-      console.log('running octokit create PR');
+      console.log("files for commit:", getCommitFiles(versionFiles));
 
 
 
