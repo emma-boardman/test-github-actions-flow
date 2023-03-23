@@ -1,5 +1,5 @@
 ---
-"@mini-monorepo/package-number-two": minor
+"@MINI-MONOREPO/PACKAGE-NUMBER-TWO": MINOR
 ---
 
-Thing
+THING

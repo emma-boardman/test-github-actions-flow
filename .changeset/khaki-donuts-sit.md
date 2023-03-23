@@ -1,5 +1,5 @@
 ---
-"@mini-monorepo/package-number-one": major
+"@MINI-MONOREPO/PACKAGE-NUMBER-ONE": MAJOR
 ---
 
-inpiuohooiyuhihj
+INPIUOHOOIYUHIHJ

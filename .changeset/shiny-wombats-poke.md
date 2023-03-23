@@ -1,5 +1,5 @@
 ---
-"@mini-monorepo/package-number-two": patch
+"@MINI-MONOREPO/PACKAGE-NUMBER-TWO": PATCH
 ---
 
-Teeny tiny patch
+TEENY TINY PATCH

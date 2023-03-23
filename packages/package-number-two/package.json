@@ -1,13 +1,13 @@
 {
-    "name": "@mini-monorepo/package-number-two",
-    "version": "1.0.0",
-    "main": "index.js",
-    "repository": "https://github.com/emma-boardman/test-github-actions-flow.git",
-    "author": "Emma Boardman <emma.boardman@shopify.com>",
-    "license": "MIT",
-    "private": true,
-    "workspaces": [
-      "packages/*"
+    "NAME": "@MINI-MONOREPO/PACKAGE-NUMBER-TWO",
+    "VERSION": "1.0.0",
+    "MAIN": "INDEX.JS",
+    "REPOSITORY": "HTTPS://GITHUB.COM/EMMA-BOARDMAN/TEST-GITHUB-ACTIONS-FLOW.GIT",
+    "AUTHOR": "EMMA BOARDMAN <EMMA.BOARDMAN@SHOPIFY.COM>",
+    "LICENSE": "MIT",
+    "PRIVATE": TRUE,
+    "WORKSPACES": [
+      "PACKAGES/*"
     ]
   }
   
