@@ -2,6 +2,7 @@ const {getOctokitOptions, GitHub} = require('@actions/github/lib/utils');
 const core = require('@actions/core');
 const {exec, getExecOutput }= require('@actions/exec');
 const github = require('@actions/github');
+const fs = require("fs");
 const {createPullRequest} = require('octokit-plugin-create-pull-request');
 
 const main = async () => {
@@ -79,17 +80,15 @@ function getCommitFiles(versionFiles) {
 
     return {
       ...obj,
-      [fileName]: ({exists, encoding, content}) => {
-        if (!exists) return "test";
-        
-        // updates file based on current content
-        return Buffer.from(content, encoding)
-          .toString("utf-8");
-      },
+      [fileName]: getFileContent(fileName)
     };
   }, {});
 
   return fileObj;
+}
+
+function getFileContent(fileName){
+  return fs.readFileSync(fileName).toString();
 }
 
 function getPRDescription() {
