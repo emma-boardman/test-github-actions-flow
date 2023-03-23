@@ -47,9 +47,6 @@ const main = async () => {
       issue_number: data.number,
     });
 
-
-
-      console.log("Succesfully created/updated PR #", data)
       return data.number;
     
     } else {
