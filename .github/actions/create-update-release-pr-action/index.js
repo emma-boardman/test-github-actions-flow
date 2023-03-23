@@ -73,9 +73,11 @@ function getCommitFiles(versionFiles) {
 
   const fileObj = files.reduce((obj, fileDetails) => {
 
-    const fileDetailsArray = fileDetails.split(/[ ]/);
+    const fileDetailsArray = fileDetails.replace(/^\s+/, "").split(/[ ]/);
     const fileStatusCode = fileDetailsArray[0];
     const fileName = fileDetailsArray.pop();
+
+    console.log(fileDetailsArray);
 
     return {
       ...obj,
@@ -87,6 +89,7 @@ function getCommitFiles(versionFiles) {
 }
 
 function getFileContent(fileName){
+  console.log('checking file content for', fileName)
   return fs.readFileSync(fileName).toString();
 }
 
