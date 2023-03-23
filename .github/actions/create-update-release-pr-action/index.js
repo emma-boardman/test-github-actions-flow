@@ -71,16 +71,15 @@ function getCommitFiles(versionFiles) {
   let files = versionFiles.split(/\r?\n/);
   files = files.splice(0, files.length -1);
 
-  const sanitisedFiles = Array.from(files, (file) => {
-    const fileArray = file.split(/[ ]/);
-    return fileArray.pop();
-  });
+  const fileObj = files.reduce((obj, fileDetails) => {
 
-  const fileObj = sanitisedFiles.reduce((obj, fileName) => {
+    const fileDetailsArray = fileDetails.split(/[ ]/);
+    const fileStatusCode = fileDetailsArray[0];
+    const fileName = fileDetailsArray.pop();
 
     return {
       ...obj,
-      [fileName]: getFileContent(fileName)
+      [fileName]: fileStatusCode === "D" ? "" : getFileContent(fileName)
     };
   }, {});
 
