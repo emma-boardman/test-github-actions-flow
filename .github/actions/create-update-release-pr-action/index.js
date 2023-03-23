@@ -80,7 +80,7 @@ function getCommitFiles(versionFiles) {
     return {
       ...obj,
       [fileName]: ({exists, encoding, content}) => {
-        if (!exists) return null;
+        if (!exists) return "test";
         
         // updates file based on current content
         return Buffer.from(content, encoding)
