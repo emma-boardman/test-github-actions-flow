@@ -47,7 +47,7 @@ const main = async () => {
 
 
       console.log("Succesfully created/updated PR #", data)
-      return data.number;
+      // return data.number;
     
     } else {
        console.log('exiting....')
