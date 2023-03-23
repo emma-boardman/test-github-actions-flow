@@ -22,7 +22,6 @@ const main = async () => {
       console.log("files for commit:", getCommitFiles(versionFiles));
 
 
-
       const {data} = await octokit.createPullRequest({
         ...context.repo,
         title: commitMessage,
@@ -68,14 +67,16 @@ async function hasGitStatusChanged(
 }
 
 function getCommitFiles(versionFiles) {
-  const files = versionFiles.split(/\r?\n/);
+  let files = versionFiles.split(/\r?\n/);
+  files = files.splice(0, files.length -1);
+
   const sanitisedFiles = Array.from(files, (file) => {
     const fileArray = file.split(/[ ]/);
     return fileArray.pop();
   });
 
-
   const fileObj = sanitisedFiles.reduce((obj, fileName) => {
+
     return {
       ...obj,
       [fileName]: "File content goes here"
