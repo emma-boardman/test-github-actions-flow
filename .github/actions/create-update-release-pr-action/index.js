@@ -41,7 +41,7 @@ const main = async () => {
 
        await octokit.rest.issues.addLabels({
       ...context.repo,
-      labels: 'Version Package',
+      labels: ['Version Package'],
       issue_number: data.number,
     });
 
@@ -53,9 +53,6 @@ const main = async () => {
     } else {
        console.log('exiting....')
     }
-    
-
-
   
 };
 
