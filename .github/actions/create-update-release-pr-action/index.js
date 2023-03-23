@@ -95,7 +95,8 @@ function getPRDescription(versionFiles) {
 
   const changelogContent = getFileContent(changelogFiles)
   
-  return `${introContent} ${changelogContent}`;
+  // return `${introContent} ${changelogContent}`;
+  return introContent;
 }
 
 function getFileContent(fileName){
