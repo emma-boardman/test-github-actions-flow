@@ -35,11 +35,6 @@ jobs:
       - name: Install dependencies
         run: yarn install
 
-      - name: Check for changeset
-        id: check_changesets_change
-        # TODO: capture this output ()
-        run: npx @changesets/cli status --since="origin/main"
-
       - name: Install Dependencies for create-update-release-pr-action
         working-directory: .github/actions/create-update-release-pr-action
         run: yarn install

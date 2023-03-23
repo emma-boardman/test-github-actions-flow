@@ -39,11 +39,9 @@ const main = async () => {
         changes: [
           {
             commit: "Creating a commit on a new branch",
-            "path/to/file1.txt": "Content for file1",
-            ".changeset/hungry-wombat-stand.md": "Content for file"
+            emptyCommit: false,
           },
         ],
-        emptyCommit: false,
       });
 
 
