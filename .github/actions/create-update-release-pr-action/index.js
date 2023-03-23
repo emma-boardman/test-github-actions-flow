@@ -26,7 +26,7 @@ const main = async () => {
       const {data} = await octokit.createPullRequest({
         ...context.repo,
         title: commitMessage,
-        body: getPRDescription(),
+        body: getPRDescription(versionFiles),
         head: `changeset-release/main`,
         update: true,
         createWhenEmpty: false,
@@ -85,15 +85,23 @@ function getCommitFiles(versionFiles) {
   return fileObj;
 }
 
+function getPRDescription(versionFiles) {
+  // TODO: Iterate through each package + list changelog content per package
+  // Example PR description: https://github.com/Shopify/polaris/pull/8612
+
+  const introContent = "This PR was opened by the [OSUI Version Package](https://github.com/shopify/online-store-ui/.github/actions/changesets/close-existing-release-pr-action/action.yml) GitHub action. When you're ready to do a release, you can merge this and the packages will be published to npm automatically. If you're not ready to do a release yet, that's fine, whenever you add more changesets to main, a fresh Version Package PR will be created.";
+  
+  const changelogFiles = versionFiles.filter(file => file.includes("CHANGELOG.md"));
+
+  const changelogContent = getFileContent(changelogFiles)
+  
+  return `${introContent} ${changelogContent}`;
+}
+
 function getFileContent(fileName){
-  console.log('checking file content for', fileName)
   return fs.readFileSync(fileName).toString();
 }
 
-function getPRDescription() {
-  // TODO: Iterate through each package + list changelog content per package
-  // Example PR description: https://github.com/Shopify/polaris/pull/8612
-  return "This PR was opened by the [OSUI Version Package](https://github.com/shopify/online-store-ui/.github/actions/changesets/close-existing-release-pr-action/action.yml) GitHub action. When you're ready to do a release, you can merge this and the packages will be published to npm automatically. If you're not ready to do a release yet, that's fine, whenever you add more changesets to main, a fresh Version Package PR will be created.";
-}
+
 
 main().catch((err) => core.setFailed(err.message));
