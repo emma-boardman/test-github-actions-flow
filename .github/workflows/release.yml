@@ -42,7 +42,7 @@ jobs:
 
       - name: Install Dependencies for create-update-release-pr-action
         working-directory: .github/actions/create-update-release-pr-action
-        run: npm install
+        run: yarn install
 
       - name: Generate changelog and update versions
         run: npx @changesets/cli version

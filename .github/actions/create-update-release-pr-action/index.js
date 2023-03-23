@@ -1,6 +1,6 @@
 const {getOctokitOptions, GitHub} = require('@actions/github/lib/utils');
 const core = require('@actions/core');
-const exec = require('@actions/exec');
+const {exec, getExecOutput }= require('@actions/exec');
 const github = require('@actions/github');
 const {createPullRequest} = require('octokit-plugin-create-pull-request');
 
@@ -15,7 +15,8 @@ const main = async () => {
   const commitMessage = 'Version Packages';
 
     console.log('Running git status check');
-    const versionFiles = exec.exec('git', ['status', '--porcelain']);
+    const versionFiles = await hasPackageVersionChanged();
+
 
     console.log('Result:', versionFiles);
 
@@ -51,6 +52,14 @@ const main = async () => {
     // return data.number;
   
 };
+
+async function hasPackageVersionChanged(
+
+) {
+  const output = await getExecOutput('git', ['status', '--porcelain']);
+
+  return output.stdout;
+}
 
 function getCommitFiles(versionFiles) {
   const files = versionFiles.split(/\r?\n/);
