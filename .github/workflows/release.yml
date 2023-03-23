@@ -33,11 +33,11 @@ jobs:
           node-version: 16.x
 
       - name: Install dependencies
-        run: yarn install
+        run: yarn install --frozen-lockfile
 
       - name: Install Dependencies for create-update-release-pr-action
         working-directory: .github/actions/create-update-release-pr-action
-        run: yarn install
+        run: yarn install --frozen-lockfile
 
       - name: Generate changelog and update versions
         run: npx @changesets/cli version
