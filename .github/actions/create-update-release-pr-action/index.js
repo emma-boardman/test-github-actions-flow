@@ -26,7 +26,7 @@ const main = async () => {
         ...context.repo,
         title: commitMessage,
         body: getPRDescription(),
-        head: `changesets-release/main`,
+        head: `changeset-release/main`,
         update: true,
         createWhenEmpty: false,
         changes: [
@@ -79,14 +79,12 @@ function getCommitFiles(versionFiles) {
 
     return {
       ...obj,
-      // [fileName]: "File content goes here"
       [fileName]: ({exists, encoding, content}) => {
         if (!exists) return null;
         
         // updates file based on current content
         return Buffer.from(content, encoding)
-          .toString("utf-8")
-          .toUpperCase();
+          .toString("utf-8");
       },
     };
   }, {});
