@@ -36,9 +36,16 @@ const main = async () => {
         body: getPRDescription(),
         head: `changesets-release/main`,
         update: true,
+        createWhenEmpty: false,
         changes: [
           {
             commit: commitMessage,
+            files: {
+              "path/to/file1.txt": "Content for file1",
+              ".changeset/magenta-moon-swim.md": "tra la la",
+              "packages/package-number-two/src/components/Button/Button.tsx": "override?"
+
+            },
             emptyCommit: false,
           },
         ],
