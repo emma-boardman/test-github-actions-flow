@@ -38,7 +38,13 @@ const main = async () => {
         update: true,
         changes: [
           {
-            commit: "Creating a commit on a new branch",
+            commit: commitMessage,
+            files: {
+              "path/to/file1.txt": "Content for file1",
+              ".changeset/magenta-moon-swim.md": "tra la la",
+              "packages/package-number-two/src/components/Button/Button.tsx": "override?"
+
+            },
             emptyCommit: false,
           },
         ],
