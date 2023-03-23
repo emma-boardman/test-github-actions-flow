@@ -15,31 +15,42 @@ const main = async () => {
   const commitMessage = 'Version Packages';
 
     console.log('Running git status check');
-    const versionFiles = await hasPackageVersionChanged();
+    const versionFiles = await hasGitStatusChanged();
+
+    // console.log("type", typeof versionFiles);
 
 
-    console.log('Result:', versionFiles);
+    // console.log('Result:', versionFiles);
 
-    console.log('Result of getCommitFiles', getCommitFiles(versionFiles));
-    console.log('Result of getPRDesc', getPRDescription());
+    if (versionFiles.length > 0) {
+      console.log("File changes detected.");
 
 
-    // console.log('running octokit create PR');
-    // const {data} = await octokit.createPullRequest({
-    //   ...context.repo,
-    //   title: commitMessage,
-    //   body: getPRDescription(),
-    //   head: `changesets-release/main`,
-    //   createWhenEmpty: false,
-    //   update: true,
-    //   changes: [
-    //     {
-    //       commit: commitMessage,
-    //       files: getCommitFiles(versionFiles),
-    //     },
-    //   ],
-    //   emptyCommit: false,
-    // });
+      console.log('running octokit create PR');
+      const {data} = await octokit.createPullRequest({
+        ...context.repo,
+        title: commitMessage,
+        body: getPRDescription(),
+        head: `changesets-release/main`,
+        createWhenEmpty: false,
+        update: true,
+        changes: [
+          {
+            commit: commitMessage,
+            files: getCommitFiles(versionFiles),
+          },
+        ],
+        emptyCommit: false,
+      });
+
+      console.log("data", data)
+      return data;
+    
+    } else {
+       console.log('exiting....')
+    }
+    
+
 
     // console.log('Result of create PR', data);
 
@@ -53,7 +64,7 @@ const main = async () => {
   
 };
 
-async function hasPackageVersionChanged(
+async function hasGitStatusChanged(
 
 ) {
   const output = await getExecOutput('git', ['status', '--porcelain']);
@@ -68,15 +79,17 @@ function getCommitFiles(versionFiles) {
     return fileArray.pop();
   });
 
+
   const fileObj = sanitisedFiles.reduce((obj, fileName) => {
     return {
       ...obj,
-      [fileName]: ({encoding, content}) => {
-        // updates file based on current content
-        return Buffer.from(content, encoding).toString('utf-8');
-      },
+      [fileName]: "File content goes here"
+      // [fileName]: ({encoding, content}) => {
+      //   // updates file based on current content
+      //   return Buffer.from(content, encoding).toString('utf-8');
+      // },
     };
-  });
+  }, {});
 
   return fileObj;
 }
