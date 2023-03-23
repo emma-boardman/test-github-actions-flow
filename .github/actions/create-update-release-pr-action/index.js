@@ -1,5 +1,6 @@
 const {getOctokitOptions, GitHub} = require('@actions/github/lib/utils');
 const core = require('@actions/core');
+const exec = require('@actions/exec');
 const github = require('@actions/github');
 const {createPullRequest} = require('octokit-plugin-create-pull-request');
 
