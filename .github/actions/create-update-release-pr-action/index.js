@@ -4,6 +4,7 @@ const {exec, getExecOutput }= require('@actions/exec');
 const github = require('@actions/github');
 const fs = require("fs");
 const {createPullRequest} = require('octokit-plugin-create-pull-request');
+const { version } = require('os');
 
 const main = async () => {
   const context = github.context;
@@ -21,11 +22,10 @@ const main = async () => {
     if (versionFiles.length > 0) {
       console.log("✅ Version files found. Creating Version Package PR");
 
-
       const {data} = await octokit.createPullRequest({
         ...context.repo,
         title: commitMessage,
-        body: getPRDescription(),
+        body: getPRDescription(versionFiles),
         head: `changeset-release/main`,
         update: true,
         createWhenEmpty: false,
@@ -44,9 +44,7 @@ const main = async () => {
       issue_number: data.number,
     });
 
-
-
-      console.log("✅  Succesfully created/updated PR #", data.number)
+      console.log("✅ Succesfully created/updated PR #", data.number)
       return data.number;
     
     } else {
@@ -93,29 +91,32 @@ function getFileContentForCommit(versionFiles) {
   return fileObj;
 }
 
-// function getPRDescription() {
-//   const introContent = "This PR was opened by the [OSUI Version Package](https://github.com/shopify/online-store-ui/.github/actions/changesets/close-existing-release-pr-action/action.yml) GitHub action. When you're ready to do a release, you can merge this and the packages will be published to npm automatically. If you're not ready to do a release yet, that's fine, whenever you add more changesets to main, a fresh Version Package PR will be created.";
-  
-//   let files = versionFiles.split(/\r?\n/);
-//   files = files.splice(0, files.length -1);
-  
-//   const changelogFiles = files.filter(file => file.includes("CHANGELOG.md"));
-
-//   const changelogContent = getFileContent(changelogFiles)
-  
-//   // return `${introContent} ${changelogContent}`;
-//   return introContent;
-// }
 
 function getFileContent(fileName){
   return fs.readFileSync(fileName).toString();
 }
 
-function getPRDescription() {
-  // TODO: Iterate through each package + list changelog content per package
-  // Example PR description: https://github.com/Shopify/polaris/pull/8612
-  // return "This PR was opened by the [OSUI Version Package](https://github.com/shopify/online-store-ui/.github/actions/changesets/close-existing-release-pr-action/action.yml) GitHub action. When you're ready to do a release, you can merge this and the packages will be published to npm automatically. If you're not ready to do a release yet, that's fine, whenever you add more changesets to main, a fresh Version Package PR will be created.";
-  return "Test whether this is also updated"
+function getPRDescription(versionFiles) {
+  const introContent =  "This PR was opened by the [OSUI Version Package](https://github.com/shopify/online-store-ui/.github/actions/changesets/close-existing-release-pr-action/action.yml) GitHub action. When you're ready to do a release, you can merge this and the packages will be published to npm automatically. If you're not ready to do a release yet, that's fine, whenever you add more changesets to main, a fresh Version Package PR will be created.";
+
+  let description = `${introContent} \n\n ----- \n`
+
+  const changelogIdentifier = /CHANGELOG.md/;
+  const changelogFiles = versionFiles.filter((file) => changelogIdentifier.test(file));
+
+
+  changelogFiles.forEach(function(file) {
+    // Strip status code to capture file name
+    // TODO: Abstract into function for reuse
+     const fileDetailsArray= file.replace(/^\s+/, "").split(/[ ]/);
+     const fileName = fileDetailsArray.pop();
+
+     const fileContent = getFileContent(fileName);
+
+     description+= fileContent;
+
+  })
+   return description
 }
 
 
