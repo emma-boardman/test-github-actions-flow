@@ -32,7 +32,7 @@ const main = async () => {
         changes: [
           {
             commit: commitMessage,
-            files: getCommitFiles(versionFiles),
+            files: getFileContentForCommit(versionFiles),
             emptyCommit: false,
           },
         ],
@@ -73,9 +73,10 @@ async function getUncomittedVersionFiles(
 
 
 
-function getCommitFiles(versionFiles) {
+function getFileContentForCommit(versionFiles) {
   const fileObj = versionFiles.reduce((obj, fileDetails) => {
 
+    // Initial Status format: XY PATH
     const fileDetailsArray = fileDetails.replace(/^\s+/, "").split(/[ ]/);
     // Status codes: https://git-scm.com/docs/git-status
     const fileStatusCode = fileDetailsArray[0];
@@ -113,7 +114,8 @@ function getFileContent(fileName){
 function getPRDescription() {
   // TODO: Iterate through each package + list changelog content per package
   // Example PR description: https://github.com/Shopify/polaris/pull/8612
-  return "This PR was opened by the [OSUI Version Package](https://github.com/shopify/online-store-ui/.github/actions/changesets/close-existing-release-pr-action/action.yml) GitHub action. When you're ready to do a release, you can merge this and the packages will be published to npm automatically. If you're not ready to do a release yet, that's fine, whenever you add more changesets to main, a fresh Version Package PR will be created.";
+  // return "This PR was opened by the [OSUI Version Package](https://github.com/shopify/online-store-ui/.github/actions/changesets/close-existing-release-pr-action/action.yml) GitHub action. When you're ready to do a release, you can merge this and the packages will be published to npm automatically. If you're not ready to do a release yet, that's fine, whenever you add more changesets to main, a fresh Version Package PR will be created.";
+  return "Test whether this is also updated"
 }
 
 
