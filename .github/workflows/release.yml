@@ -33,7 +33,7 @@ jobs:
           node-version: 16.x
 
       - name: Install changeset cli
-        run: yarn add @changesets/cli
+        run: yarn add -W @changesets/cli
 
       - name: Install Dependencies for create-update-release-pr-action
         working-directory: .github/actions/create-update-release-pr-action
