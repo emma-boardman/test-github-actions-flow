@@ -1,9 +1,9 @@
 {
   "$schema": "https://unpkg.com/@changesets/config@2.3.0/schema.json",
-  "changelog": [
+    "changelog": [
     "@changesets/changelog-github",
     {
-      "repo": "Shopify/online-store-ui"
+      "repo": "emma-boardman/test-github-actions-flow"
     }
   ],
   "commit": false,
