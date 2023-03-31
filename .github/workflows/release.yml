@@ -11,6 +11,9 @@ jobs:
   run-changesets:
     name: Run changeset actions
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
     # outputs:
       # changeset-has-changed: ${{ steps.check-changesets-change.outputs.changed }}
     steps:
