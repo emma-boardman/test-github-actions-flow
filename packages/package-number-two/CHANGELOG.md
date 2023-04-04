@@ -1,5 +1,19 @@
 # @mini-monorepo/package-number-two
 
+## 3.0.0
+
+### Major Changes
+
+- [`3f5addf`](https://github.com/emma-boardman/test-github-actions-flow/commit/3f5addf4cd3d948b7e576a5a8a542375d10d877c) Thanks [@emma-boardman](https://github.com/emma-boardman)! - huihigh
+
+### Minor Changes
+
+- [`89c3a87`](https://github.com/emma-boardman/test-github-actions-flow/commit/89c3a8767d2349851be0cb65e6ce135a6106101b) Thanks [@emma-boardman](https://github.com/emma-boardman)! - huihigh
+
+### Patch Changes
+
+- [#18](https://github.com/emma-boardman/test-github-actions-flow/pull/18) [`d40a867`](https://github.com/emma-boardman/test-github-actions-flow/commit/d40a8670cfd2a721a22559018b894e7b2a6640a2) Thanks [@emma-boardman](https://github.com/emma-boardman)! - Patch
+
 ## 2.0.0
 
 ### Major Changes
@@ -19,7 +33,6 @@
 ### Patch Changes
 
 - [#2](https://github.com/emma-boardman/test-github-actions-flow/pull/2) [`03fd1d5`](https://github.com/emma-boardman/test-github-actions-flow/commit/03fd1d55689bb709ee8efa34deaf18a1681e4c67) Thanks [@emma-boardman](https://github.com/emma-boardman)! - Teeny tiny patch
-
 
 ## 1.0.1
 
