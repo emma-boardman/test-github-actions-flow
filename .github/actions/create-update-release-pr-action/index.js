@@ -100,6 +100,14 @@ function getFileContent(fileName) {
   return fs.readFileSync(fileName).toString();
 }
 
+function getChangelogFileContent(fileName) {
+  const fileContent = getFileContent(fileName);
+  const newVersionIndex = fileContent.indexOf('\n## ') + 1;
+  const lastVersionIndex =
+    fileContent.indexOf('\n## ', newVersionIndex + 1) - 1;
+  return fileContent.substring(newVersionIndex, lastVersionIndex);
+}
+
 
 function getPRDescription(versionFiles) {
   const introContent =
@@ -116,7 +124,7 @@ function getPRDescription(versionFiles) {
   changelogFiles.forEach(function (fileDetails) {
     const {name} = fileDetails;
 
-    const fileContent = getFileContent(name);
+    const fileContent = getChangelogFileContent(name);
     
     description += fileContent;
   });
