@@ -110,7 +110,7 @@ function getChangelogFileContent(fileName) {
   const lastVersionIndex =
     fileContent.indexOf('\n## ', newVersionIndex + 1) - 1;
     console.log('lastVersionIndex', lastVersionIndex);
-    console.log('returned at lastindex', fileContent[newVersionIndex]);
+    console.log('returned at lastindex', fileContent[lastVersionIndex]);
     console.log(fileContent.substring(newVersionIndex, lastVersionIndex));
   return fileContent.substring(newVersionIndex, lastVersionIndex);
 }
@@ -131,6 +131,8 @@ function getPRDescription(versionFiles) {
     const {name} = fileDetails;
 
     const fileContent = getChangelogFileContent(name);
+    
+    console.log('returned file content', fileContent);
 
     description += fileContent;
   });
