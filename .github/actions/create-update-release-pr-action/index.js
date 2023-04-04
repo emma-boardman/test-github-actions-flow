@@ -100,20 +100,6 @@ function getFileContent(fileName) {
   return fs.readFileSync(fileName).toString();
 }
 
-function getChangelogFileContent(fileName) {
-  const fileContent = getFileContent(fileName);
-  console.log('fileContent', fileContent);
-  const newVersionIndex = fileContent.indexOf('\n## ') + 1;
-  console.log('returned at new index', fileContent[newVersionIndex]);
-  console.log('we know the version number is an h2')
-  console.log('newVersionIndex', newVersionIndex);
-  const lastVersionIndex =
-    fileContent.indexOf('\n## ', newVersionIndex + 1) - 1;
-    console.log('lastVersionIndex', lastVersionIndex);
-    console.log('returned at lastindex', fileContent[lastVersionIndex]);
-    console.log(fileContent.substring(newVersionIndex, lastVersionIndex));
-  return fileContent.substring(newVersionIndex, lastVersionIndex);
-}
 
 function getPRDescription(versionFiles) {
   const introContent =
@@ -130,10 +116,8 @@ function getPRDescription(versionFiles) {
   changelogFiles.forEach(function (fileDetails) {
     const {name} = fileDetails;
 
-    const fileContent = getChangelogFileContent(name);
+    const fileContent = getFileContent(name);
     
-    console.log('returned file content', fileContent);
-
     description += fileContent;
   });
   return description;
