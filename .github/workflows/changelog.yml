@@ -12,7 +12,8 @@ on:
 jobs:
   check:
     if: |
-      !contains(github.event.pull_request.head.ref, 'changeset-release')
+      !contains(github.event.pull_request.head.ref, 'changeset-release') &&
+      !contains(github.event.pull_request.labels.*.name, 'skip changelog')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout branch
