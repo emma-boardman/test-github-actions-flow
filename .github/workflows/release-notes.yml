@@ -5,8 +5,6 @@ on:
     tags:
       # tag with format 'vx.x.x@repo/pkgname'
       - '^v\d+\.\d+\.\d+@[\w\-]+/[\w\-]+$'
-    tags-ignore:
-      - '*snapshot-release*'
 
 jobs:
   create-release-notes:
