@@ -104,11 +104,13 @@ function getChangelogFileContent(fileName) {
   const fileContent = getFileContent(fileName);
   console.log('fileContent', fileContent);
   const newVersionIndex = fileContent.indexOf('\n## ') + 1;
+  console.log('returned at new index', fileContent[newVersionIndex]);
   console.log('we know the version number is an h2')
   console.log('newVersionIndex', newVersionIndex);
   const lastVersionIndex =
     fileContent.indexOf('\n## ', newVersionIndex + 1) - 1;
     console.log('lastVersionIndex', lastVersionIndex);
+    console.log('returned at lastindex', fileContent[newVersionIndex]);
     console.log(fileContent.substring(newVersionIndex, lastVersionIndex));
   return fileContent.substring(newVersionIndex, lastVersionIndex);
 }
