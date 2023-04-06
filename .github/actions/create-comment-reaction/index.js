@@ -11,7 +11,7 @@ const main = async () => {
 
   const octokit = github.getOctokit(token);
 
-  await octokit.rest.reactions.createForCommitComment({
+  await octokit.rest.reactions.createForIssueComment({
     comment_id: commentId,
     content: reaction,
     ...github.context.repo,
