@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Install Dependencies for create-release-notes
-        working-directory: ./github/actions/create-release-notes
+        working-directory: .github/actions/create-release-notes
         run: yarn install --frozen-lockfile
 
       - name: Create release notes
