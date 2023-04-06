@@ -20,3 +20,5 @@ const main = async () => {
     //   console.log('response', response?.data)
 
 }
+
+main().catch((err) => core.setFailed(err.message));
