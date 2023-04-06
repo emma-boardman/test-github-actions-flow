@@ -5,7 +5,7 @@ on:
     tags:
       # tag with format 'vx.x.x@repo/pkgname'
       # - '^v\d+\.\d+\.\d+@[\w\-]+/[\w\-]+$'
-      - '^v\'
+      - ^v\
 
 jobs:
   create-release-notes:
