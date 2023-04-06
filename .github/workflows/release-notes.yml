@@ -9,6 +9,13 @@ on:
 jobs:
   create-release-notes:
     runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.ACCESS_TOKEN }}
+        
     steps:
       - name: Install Dependencies for create-release-notes
         working-directory: .github/actions/create-release-notes
