@@ -15,7 +15,7 @@ jobs:
         run: yarn install --frozen-lockfile
 
       - name: Create release notes
-        uses: .github/actions/create-release-notes/action.yml
+        uses: ./github/actions/create-release-notes/action.yml
         with:
           PUSHED_TAG: ${{ github.ref }}
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
