@@ -1,0 +1,27 @@
+name: Snapshot
+
+on:
+  issue_comment:
+    types:
+      - created
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+  snapshot:
+    name: Snapshot Release
+    if: |
+        github.event.issue.pull_request &&
+        (github.event.comment.body == '/snapit' || github.event.comment.body == '/snapshot-release')
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Add initial reaction
+        uses: ./.github/actions/create-comment-reaction
+        with:
+          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          comment-id: ${{ github.event.comment.id }}
+          reaction: eyes
+
+
+    

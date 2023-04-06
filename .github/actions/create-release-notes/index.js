@@ -1,4 +1,4 @@
-const {getOctokitOptions, GitHub} = require('@actions/github/lib/utils');
+
 const core = require('@actions/core');
 const github = require('@actions/github');
 const fs = require('fs');
@@ -8,17 +8,11 @@ const main = async () => {
   const token = core.getInput('GITHUB_TOKEN');
   const tag = core.getInput('PUSHED_TAG').replace('refs/tags/', '');
 
-
-  console.log('tag', tag);
-
   const octokit = github.getOctokit(token);
 
   const [version, packageName] = tag.split('@');
   const [_, packageDir] = packageName.split('/');
 
-  console.log('version', version);
-  console.log('packageName', packageName);
-  console.log('packageDir', packageDir);
 
   // get the package changelog
   const changelogFileName = path.join(
