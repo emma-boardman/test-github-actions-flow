@@ -3,11 +3,8 @@ name: Release Notes
 on:
   push:
     tags:
-    # match version tags, exclude snapshots
-      # - 'v[0-9]+.[0-9]+.[0-9]+@**'
-      - v*
-      - '!snapshot'
-
+      - 'v**'
+      - '!v**-snapshot-release'
 
 jobs:
   create-release-notes:
