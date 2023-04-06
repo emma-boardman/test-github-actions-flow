@@ -7,7 +7,7 @@ const main = async () => {
 
     console.log('sha', sha);
 
-    console.log('context', context);
+    console.log('context', github.context);
 
     const octokit = github.getOctokit(token);
     

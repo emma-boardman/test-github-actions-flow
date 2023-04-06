@@ -6,6 +6,9 @@ inputs:
   GITHUB_TOKEN:
     description: 'Github access token'
     required: true
+  sha:
+    descripton: 'sha'
+    required: true
 runs:
   using: 'node16'
   main: 'index.js'
