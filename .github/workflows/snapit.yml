@@ -38,6 +38,6 @@ jobs:
 
       - name: Create branch to trigger Cloudsmith publish
         uses: ./.github/actions/create-snapshot-branch
-          with:
-            GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-            sha: ${{ github.event.pull_request }}
+        with:
+          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          sha: ${{ github.event.pull_request }}
