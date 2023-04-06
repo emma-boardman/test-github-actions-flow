@@ -4,7 +4,7 @@ on:
   push:
     tags:
       - 'v**'
-      - '!v**-snapshot-release'
+      - '!v**snapshot-release**'
 
 jobs:
   create-release-notes:
