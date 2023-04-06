@@ -1,0 +1,8 @@
+name: 'Create snapshot branch'
+branding:
+  icon: shopping-bag
+  colour: green
+inputs:
+  GITHUB_TOKEN:
+    description: 'Github access token'
+    required: true
