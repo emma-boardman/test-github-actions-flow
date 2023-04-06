@@ -14,7 +14,6 @@ jobs:
         github.event.issue.pull_request &&
         (github.event.comment.body == '/snapit' || github.event.comment.body == '/snapshot-release')
     runs-on: ubuntu-latest
-    permissions: write-all
 
     steps:
       - name: Checkout Repo
