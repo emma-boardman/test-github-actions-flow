@@ -16,7 +16,6 @@ jobs:
         with:
           token: ${{ secrets.ACCESS_TOKEN }}
         
-    steps:
       - name: Install Dependencies for create-release-notes
         working-directory: .github/actions/create-release-notes
         run: yarn install --frozen-lockfile
