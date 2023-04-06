@@ -4,7 +4,8 @@ on:
   push:
     tags:
       # tag with format 'vx.x.x@repo/pkgname'
-      - '^v\d+\.\d+\.\d+@[\w\-]+/[\w\-]+$'
+      # - '^v\d+\.\d+\.\d+@[\w\-]+/[\w\-]+$'
+      - '^v\'
 
 jobs:
   create-release-notes:
