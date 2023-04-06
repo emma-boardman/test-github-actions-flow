@@ -5,7 +5,7 @@ const fs = require('fs');
 
 const main = async () => {
   const token = core.getInput('GITHUB_TOKEN');
-  const tag = core.getInput('PUSHED_TAG');
+  const tag = core.getInput('PUSHED_TAG').split('/').pop();
 
   console.log('tag', tag);
 
