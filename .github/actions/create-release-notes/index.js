@@ -21,13 +21,19 @@ const main = async () => {
   console.log('packageDir', packageDir);
 
   // get the package changelog
-  let changelogFileName = path.join('packages', packageDir, 'CHANGELOG.md');
+  const changelogFileName = path.join(
+    __dirname,
+    '../../..',
+    'packages', 
+    packageDir, 
+    'CHANGELOG.md',
+  );
 
   // read Changelog file content
-  let changelogContent = await fs.readFile(changelogFileName, 'utf8');
+  let changelogContent = fs.readFileSync(changelogFileName).toString();
 
   // Extract the latest release content
-  const newVersionIndex = changelogContent.indexOf(version) + 1;
+  const newVersionIndex = changelogContent.indexOf(`\n## ${version.replace(/^v/, '')}`) + 1;
   const lastVersionIndex =
     changelogContent.indexOf('\n## ', newVersionIndex + 1) - 1;
   const changelogEntry = changelogContent.substring(
@@ -35,15 +41,12 @@ const main = async () => {
     lastVersionIndex,
   );
 
-  console.log('changelogEntry', changelogEntry);
 
   if (!changelogEntry) {
     // we can find a changelog but not the entry for this version
     // if this is true, something has probably gone wrong
     throw new Error(`Could not find changelog entry for ${tag}`);
   }
-
-
 
   await octokit.rest.repos.createRelease({
     name: tag,
