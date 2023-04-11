@@ -22,9 +22,6 @@ const main = async () => {
 
     const snapshotBranch = `refs/heads/snapshot-release/${branch}`;
 
-    console.log('snapshot branch', snapshotBranch)
-
-
     // Check if branch exists
     try {
         const response = await octokit.rest.repos.getBranch({
@@ -52,8 +49,21 @@ const main = async () => {
           }
     }
 
+    // Create and push commit updating the version number
+    // (1) The push triggers our publish pipeline
+    // (2) The file update makes the version available in the BK pipeline (for the dist tag)
 
-    // If it doesn't exist, create it
+    // Update package.json number with current date and time. 
+
+
+
+
+    // We can also reuse it for our follow-up comment, if we decide to address that in a separate step. 
+    // Maybe extract script for pulling the version tag, as we use it quite a lot. 
+
+
+
+
 
     // If it does exist, delete and recreate so we have the latest commits.
     

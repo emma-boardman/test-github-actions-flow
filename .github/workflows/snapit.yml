@@ -49,3 +49,27 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           ISSUE: ${{ github.event.issue.number }}  
 
+      - name: Install changeset cli
+        run: yarn install --frozen-lockfile
+
+      - name: Generate Snapshot version
+        run: npx @changesets/cli version --snapshot
+        env: 
+          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+
+      - name: Commit snapshot version to snapshot branch
+        uses: ./.github/actions/create-snapshot-version-commit
+        env: 
+          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+      
+      # - name: Create snapshot comment
+      #   uses: ./.github/actions/create-snapshot-comment
+      #   env: 
+      #     GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+      
+      #  - name: Delete snapshot branch
+      #    uses: ./.github/actions/delete-snapshot-branch
+      #    env: 
+      #     GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+
+
