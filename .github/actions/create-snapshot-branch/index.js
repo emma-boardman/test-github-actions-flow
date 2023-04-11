@@ -29,7 +29,7 @@ const main = async () => {
     try {
         const response = await octokit.rest.repos.getBranch({
             ...github.context.repo,
-            branch,
+            branch: snapshotBranch,
         });
 
         console.log('response', response);
