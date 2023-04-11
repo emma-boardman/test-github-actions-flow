@@ -5,7 +5,7 @@ const {getExecOutput} = require('@actions/exec');
 
 const main = async () => {
     // const token = core.getInput('GITHUB_TOKEN');
-    const branchName = 'snapshot-release/emma/test-snapit-flow';
+    const branchName = 'snapshot-release/emma/new-branch';
     // const branchName = 'test-version-flow';
 
     // const octokit = github.getOctokit(token);
@@ -20,6 +20,8 @@ const main = async () => {
         // const getBranch = await getExecOutput('git', ['checkout',  branchName]);
 
         // console.log('getBranch', getBranch);
+
+        const  = await getExecOutput('git', ['add', versionFiles[0].name]);
 
         const addFiles = await getExecOutput('git', ['add', versionFiles[0].name]);
 
