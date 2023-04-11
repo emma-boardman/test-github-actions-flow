@@ -6,8 +6,8 @@ inputs:
   GITHUB_TOKEN:
     description: 'Github access token'
     required: true
-  sha:
-    descripton: 'sha'
+  ISSUE:
+    descripton: 'PR number'
     required: true
 runs:
   using: 'node16'

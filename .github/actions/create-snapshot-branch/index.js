@@ -3,13 +3,20 @@ const github = require('@actions/github');
 
 const main = async () => {
     const token = core.getInput('GITHUB_TOKEN');
-    const sha = core.getInput('sha');
+    const issue = core.getInput('ISSUE');
 
-    console.log('sha', sha);
+    console.log('issue', issue);
 
-    console.log('context', github.context);
 
     const octokit = github.getOctokit(token);
+    
+    // Get PR information
+    const response = octokit.rest.issues(get({
+        issue_number: issue,
+        ...github.context.repo,
+    }))
+
+    console.log('response', response);
     
     // const response = await octokit.rest.git.createRef({
     //     ref: 'snapshot-release',
