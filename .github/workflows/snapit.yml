@@ -63,13 +63,16 @@ jobs:
 
       - name: Commit snapshot version to snapshot branch
         uses: ./.github/actions/create-snapshot-version
+        id: create-snapshot-release
         env: 
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
       
-      # - name: Create snapshot comment
-      #   uses: ./.github/actions/create-snapshot-comment
-      #   env: 
-      #     GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+      - name: Create snapshot comment
+        # uses: ./.github/actions/create-snapshot-comment
+        run: |
+          echo ${{ steps.create-snapshot-release.outputs.SNAPSHOT_RELEASES }}"
+        env: 
+          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
       
       #  - name: Delete snapshot branch
       #    uses: ./.github/actions/delete-snapshot-branch
