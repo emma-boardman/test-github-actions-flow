@@ -11,7 +11,7 @@ const main = async () => {
     const octokit = github.getOctokit(token);
     
     // Get PR information
-    const {data} = await octokit.rest.pull.get({
+    const {data} = await octokit.rest.pulls.get({
         pull_number: issue,
         ...github.context.repo,
     })
