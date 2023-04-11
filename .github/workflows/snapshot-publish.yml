@@ -3,7 +3,7 @@ name: Create Snapshot publish (this would be BK)
 on:
   push:
     branches:
-      - '**snapshot-release**'
+      - 'snapshot-release/**'
 
 jobs: 
   snapshot-publish:
