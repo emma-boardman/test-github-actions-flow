@@ -5,8 +5,6 @@ const main = async () => {
     const token = core.getInput('GITHUB_TOKEN');
     const issue = core.getInput('ISSUE');
 
-    console.log('issue', issue);
-
 
     const octokit = github.getOctokit(token);
     
@@ -16,7 +14,43 @@ const main = async () => {
         ...github.context.repo,
     })
 
-    console.log('response', data);
+    // Get branch information
+    let branch = data.head.ref;
+    branch = branch.replace('refs/heads/', '');
+    const lastCommit = data.head.sha;
+
+
+    const snapshotBranch = `refs/heads/snapshot-release/${branch}`;
+
+    console.log('snapshot branch', snapshotBranch)
+
+
+    // Check if branch exists
+    try {
+        await octokit.rest.repos.getBranch({
+            ...github.context.repo,
+            branch,
+        });
+    } catch (error) {
+        console.log('error', error);
+        if (error.name === 'HttpError' && error.status === 404){
+            // if branch does not exist, create new branch w/ snapshot PR commit
+            const response = await octokit.rest.git.createRef({
+                ref: snapshotBranch,
+                sha: lastCommit,
+                ...github.context.repo,
+            })
+
+            console.log('response data', response.data)
+
+            return response?.data.ref === ref;
+        }
+    }
+
+
+    // If it doesn't exist, create it
+
+    // If it does exist, delete and recreate so we have the latest commits.
     
     // const response = await octokit.rest.git.createRef({
     //     ref: 'snapshot-release',
@@ -29,3 +63,10 @@ const main = async () => {
 }
 
 main().catch((err) => core.setFailed(err.message));
+
+
+// 1. Get branch name
+// 2. Create new branch with same name
+// 3. Push branch to remote
+// 4. Add comment to current PR 
+// <-- makes sense for us to 
