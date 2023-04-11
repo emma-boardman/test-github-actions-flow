@@ -17,9 +17,9 @@ const main = async () => {
         console.log('✅ Version files found. Creating Snapshot release', versionFiles);
 
         // const getBranch = await getExecOutput('git', ['checkout',  'snapshot-release/emma/test-snapit-flow']);
-        const getBranch = await getExecOutput('git', ['checkout',  branchName]);
+        // const getBranch = await getExecOutput('git', ['checkout',  branchName]);
 
-        console.log('getBranch', getBranch);
+        // console.log('getBranch', getBranch);
 
         const addFiles = await getExecOutput('git', ['add', versionFiles[0].name]);
 
