@@ -27,10 +27,12 @@ const main = async () => {
 
     // Check if branch exists
     try {
-        await octokit.rest.repos.getBranch({
+        const response = await octokit.rest.repos.getBranch({
             ...github.context.repo,
             branch,
         });
+
+        console.log('response', response);
     } catch (error) {
         console.log('error', error);
         if (error.name === 'HttpError' && error.status === 404){
@@ -45,6 +47,9 @@ const main = async () => {
 
             return response?.data.ref === ref;
         }
+        else {
+            throw Error(error);
+          }
     }
 
 
