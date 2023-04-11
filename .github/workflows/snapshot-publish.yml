@@ -10,6 +10,6 @@ jobs:
   runs-on: ubuntu-latest
   steps:
     - name: Check this works with programmatic commits
-    run: |
-      echo "Hi!"
+      run: |
+        echo "Hi!"
 

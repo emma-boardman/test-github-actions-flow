@@ -45,7 +45,7 @@ const main = async () => {
 
             console.log('response data', response.data)
 
-            return response?.data.ref === ref;
+            return response?.data.ref === lastCommit
         }
         else {
             throw Error(error);
