@@ -11,10 +11,10 @@ const main = async () => {
     const octokit = github.getOctokit(token);
     
     // Get PR information
-    const response = octokit.rest.issues(get({
+    const response = octokit.rest.issues.get({
         issue_number: issue,
         ...github.context.repo,
-    }))
+    })
 
     console.log('response', response);
     
