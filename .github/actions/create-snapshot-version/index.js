@@ -21,7 +21,7 @@ const main = async () => {
 
         // console.log('getBranch', getBranch);
 
-        const  = await getExecOutput('git', ['add', versionFiles[0].name]);
+        // const  = await getExecOutput('git', ['add', versionFiles[0].name]);
 
         const addFiles = await getExecOutput('git', ['add', versionFiles[0].name]);
 
