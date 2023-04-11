@@ -58,7 +58,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
 
       - name: Commit snapshot version to snapshot branch
-        uses: ./.github/actions/create-snapshot-version-commit
+        uses: ./.github/actions/create-snapshot-version
         env: 
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
       
