@@ -1,0 +1,15 @@
+name: Create Snapshot publish (this would be BK)
+
+on:
+  push:
+    branches:
+      - '**snapshot-release'
+
+jobs: 
+  snapshot-publish:
+  runs-on: ubuntu-latest
+  steps:
+    - name: Check this works with programmatic commits
+    run: |
+      echo "Hi!"
+
