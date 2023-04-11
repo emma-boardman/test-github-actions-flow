@@ -35,7 +35,11 @@ const main = async () => {
 
         const addFiles = await getExecOutput('git', ['add', versionFiles[0].name]);
 
-        console.log('add files'), addFiles;
+        console.log('add files', addFiles);
+
+        const commitFiles = await getExecOutput('git', ['commit', '-m', 'Snapshot Version']);
+
+        console.log('commit files', commitFiles);
 
         const pushFiles = await getExecOutput('git', ['push', 'origin', branchName]);
 
