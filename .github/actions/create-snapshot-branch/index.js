@@ -11,12 +11,12 @@ const main = async () => {
     const octokit = github.getOctokit(token);
     
     // Get PR information
-    const response = await octokit.rest.issues.get({
-        issue_number: issue,
+    const {data} = await octokit.rest.pull.get({
+        pull_number: issue,
         ...github.context.repo,
     })
 
-    console.log('response', response);
+    console.log('response', data);
     
     // const response = await octokit.rest.git.createRef({
     //     ref: 'snapshot-release',
