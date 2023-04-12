@@ -1,5 +1,6 @@
 const core = require('@actions/core');
 const fs = require('fs');
+const path = require('path');
 const {getExecOutput} = require('@actions/exec');
 const github = require('@actions/github');
 
@@ -89,8 +90,8 @@ async function createReleaseBranch(octokit){
           console.log('✅ Retrived commit tree SHA', currentCommitTreeSha);
 
           const versionFileBlobs = await Promise.all(versionFiles.map(createBlobForFile(octokit)));
-          const pathsForBlobs = versionFiles.map(path => path.relative(path, __dirname));
-          const pathsForBlobsRev = versionFiles.map(path => path.relative(__dirname, path));
+          const pathsForBlobs = versionFiles.map(filePath => path.relative(filePath, __dirname));
+          const pathsForBlobsRev = versionFiles.map(filePath => path.relative(__dirname, filePath));
 
 
 
