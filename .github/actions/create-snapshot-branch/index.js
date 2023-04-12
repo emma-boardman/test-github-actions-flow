@@ -9,7 +9,11 @@ const octokit = github.getOctokit(token);
 
 const main = async () => {
     
-    const {branch, sha} = await createReleaseBranch(octokit);
+    const branchDetails = await createReleaseBranch(octokit);
+
+    console.log('branch', branchDetails);
+
+    const {branch, sha} = branchDetails;
 
     await createVersionCommit(octokit, branch, sha);
 }
@@ -41,7 +45,7 @@ async function createReleaseBranch(octokit){
             ref: snapshotRef,
             ...github.context.repo,
         })
-        await createBranchRef(snapshotBranch, lastCommit);
+        return await createBranchRef(snapshotBranch, lastCommit);
 
     } catch (error) {
         // if branch does not exist, create new branch with the latest commit
@@ -61,6 +65,8 @@ async function createReleaseBranch(octokit){
             sha: lastCommit,
             ...github.context.repo,
         })
+
+        console.log('object to return: ', {branch: snapshotBranch, sha: lastCommit})
 
         return {branch: snapshotBranch, sha: lastCommit}
     }
