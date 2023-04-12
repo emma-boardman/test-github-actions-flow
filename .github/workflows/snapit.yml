@@ -15,6 +15,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Setup
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.ACCESS_TOKEN }}
+          
       # Add reaction to comment
       - name: Install Dependencies for create-comment-reaction
         working-directory: .github/actions/create-comment-reaction

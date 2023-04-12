@@ -7,8 +7,6 @@ const main = async () => {
   const commentId = core.getInput('comment-id');
   const reaction = core.getInput('reaction');
 
-  console.log('commentId', commentId);
-
   const octokit = github.getOctokit(token);
 
   await octokit.rest.reactions.createForIssueComment({
