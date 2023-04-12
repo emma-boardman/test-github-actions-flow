@@ -6,7 +6,7 @@ const main = async () => {
     const issue = core.getInput('ISSUE');
     let snapshots = core.getInput('SNAPSHOTS');
 
-    const comment = "Hi friend! Thanks for creating a snapshot. Test the snapshots by updating your `package.json` with the newly published versions";
+    let comment = "Hi friend! Thanks for creating a snapshot. Test the snapshots by updating your `package.json` with the newly published versions";
 
     console.log(typeof snapshots);
 
