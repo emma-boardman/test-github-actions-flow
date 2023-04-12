@@ -61,14 +61,12 @@ jobs:
           ISSUE: ${{ github.event.issue.number }}  
 
       - name: Create branch-failure comment
-        if: ${{ !steps.create-snapshot-branch.output.SNAPSHOT_BRANCH_CREATED }}
+        if: ${{ steps.check-for-version-files.output.HAS_CHANGESET && !steps.create-snapshot-branch.output.SNAPSHOT_BRANCH_CREATED }}
         run: |
           echo "Snapshot branch could not be created. Check the Actions log, or reach out in #online-store-ui-library on Slack."
 
-     
-
       - name: Create snapshot comment
-        if: ${{ !steps.create-snapshot-branch.output.SNAPSHOT_BRANCH_CREATED }}
+        if: ${{ steps.check-for-version-files.output.HAS_CHANGESET && steps.create-snapshot-branch.output.SNAPSHOT_BRANCH_CREATED }}
         # uses: ./.github/actions/create-snapshot-comment
         run: |
           echo "${{ steps.create-snapshot-release.outputs.SNAPSHOT_RELEASES }} are being published to Cloudsmith"
