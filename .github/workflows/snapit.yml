@@ -36,7 +36,7 @@ jobs:
 
       - name: Check for Changeset Version Files
         id: check-for-version-files
-        uses: .github/actions/check-version-files
+        uses: ./.github/actions/check-version-files
 
       - name: Create no-changeset comment
         if: ${{ !steps.check-for-version-files.output.HAS_CHANGESET }}
