@@ -1,13 +1,19 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
 
+const token = core.getInput('GITHUB_TOKEN');
+const issue = core.getInput('ISSUE');
+const octokit = github.getOctokit(token);
+
 const main = async () => {
-    const token = core.getInput('GITHUB_TOKEN');
-    const issue = core.getInput('ISSUE');
+    console.log('do i have access to issue?', issue);
+    await createReleaseBranch(octokit);
 
+}
 
-    const octokit = github.getOctokit(token);
-    
+async function createReleaseBranch(octokit){
+    console.log('do i have access to github context?');
+
     // Get PR information
     const {data} = await octokit.rest.pulls.get({
         pull_number: issue,
@@ -18,70 +24,46 @@ const main = async () => {
     let branch = data.head.ref;
     branch = branch.replace('refs/heads/', '');
     const lastCommit = data.head.sha;
-
-
     const snapshotBranch = `refs/heads/snapshot-release/${branch}`;
 
     // Check if branch exists
     try {
-        const response = await octokit.rest.repos.getBranch({
+        const {data: getBranchData} = await octokit.rest.repos.getBranch({
             ...github.context.repo,
             branch: snapshotBranch,
         });
+        console.log('what is returned if a branch is found?', getBranchData);
 
-        console.log('response', response);
+        // if branch exists, delete and recreate with latest commit
+        const {data: deleteRefData} = await octokit.rest.git.deleteRef({
+            ref: snapshotBranch,
+            ...github.context.repo,
+        })
+        console.log('what is returned if a branch deleted?', deleteRefData);
+
+        // Finally, create fresh branch with latest commit
+        await createBranchRef(snapshotBranch, lastCommit);
+
     } catch (error) {
-        console.log('error', error);
+        // if branch does not exist, create new branch w/ snapshot PR commit
         if (error.name === 'HttpError' && error.status === 404){
-            // if branch does not exist, create new branch w/ snapshot PR commit
-            const response = await octokit.rest.git.createRef({
-                ref: snapshotBranch,
-                sha: lastCommit,
-                ...github.context.repo,
-            })
-
-            console.log('response data', response.data)
-
-            return response?.data.ref === lastCommit
+            await createBranchRef(snapshotBranch, lastCommit);
         }
         else {
             throw Error(error);
           }
     }
 
-    // Create and push commit updating the version number
-    // (1) The push triggers our publish pipeline
-    // (2) The file update makes the version available in the BK pipeline (for the dist tag)
+    }
 
-    // Update package.json number with current date and time. 
+    async function createBranchRef(snapshotBranch, lastCommit){
+        const response = await octokit.rest.git.createRef({
+            ref: snapshotBranch,
+            sha: lastCommit,
+            ...github.context.repo,
+        })
+        return response?.data.ref === lastCommit ? console.log("Snapshot branch created") : console.log("Error creating snapshot branch", response?.data)
 
-
-
-
-    // We can also reuse it for our follow-up comment, if we decide to address that in a separate step. 
-    // Maybe extract script for pulling the version tag, as we use it quite a lot. 
-
-
-
-
-
-    // If it does exist, delete and recreate so we have the latest commits.
-    
-    // const response = await octokit.rest.git.createRef({
-    //     ref: 'snapshot-release',
-    //     sha: sha || context.sha,
-    //     ...github.context.repo,
-    //   });
-
-    //   console.log('response', response?.data)
-
-}
+    }
 
 main().catch((err) => core.setFailed(err.message));
-
-
-// 1. Get branch name
-// 2. Create new branch with same name
-// 3. Push branch to remote
-// 4. Add comment to current PR 
-// <-- makes sense for us to 
