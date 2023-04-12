@@ -6,6 +6,8 @@ const main = async () => {
     const issue = core.getInput('ISSUE');
     const snapshots = core.getInput('SNAPSHOTS');
 
+    console.log('issue', issue);
+
     const octokit = github.getOctokit(token);
 
     octokit.rest.issues.createComment({
