@@ -34,8 +34,8 @@ jobs:
           reaction: eyes
 
        - name: Generate Snapshot version
-          run: npx @changesets/cli version --snapshot
-          env: 
+         run: npx @changesets/cli version --snapshot
+         env: 
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       
