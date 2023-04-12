@@ -14,7 +14,7 @@ const main = async () => {
 
     snapshots.forEach(function (snapshot) {
 
-      comment += `\n ${snapshot}`;
+      comment += `\n \`\`\`${snapshot}\`\`\``;
     });
 
     console.log('issue', issue);
