@@ -86,7 +86,7 @@ async function createReleaseBranch(octokit){
 
           const currentCommitTreeSha = commitData.tree.sha;
 
-          const versionFileBlobs = await Promise.all(versionFiles.map(createBlobForFile(octo, org, repo)));
+          const versionFileBlobs = await Promise.all(versionFiles.map(createBlobForFile(octokit)));
 
           console.log('versionFileBlobs', versionFileBlobs);
 
