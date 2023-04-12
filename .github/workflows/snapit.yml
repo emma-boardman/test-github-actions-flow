@@ -1,144 +1,79 @@
-name: Snapit
+name: Snapshot
 
 on:
   issue_comment:
     types:
       - created
-
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
 jobs:
-  snapit:
+  snapshot:
+    name: Create Snapshot Release
     if: |
-      github.event.issue.pull_request &&
-      (github.event.comment.body == '/snapit' || github.event.comment.body == './snapshot-release')
+        github.event.issue.pull_request &&
+        (github.event.comment.body == '/snapit' || github.event.comment.body == '/snapshot-release')
     runs-on: ubuntu-latest
+
     steps:
-      - name: Set up Node with v16.13.0
-        uses: actions/setup-node@v3
+      - name: Checkout Repo
+        uses: actions/checkout@v3
         with:
-          node-version: 16.13.0
+          token: ${{ secrets.ACCESS_TOKEN }}
 
-        # Add comment reaction
-        - name: Install dependencies for create-comment-reaction
-          working-directory: .github/actions/create-comment-reaction
-          run: yarn install --frozen-lockfile
+      - name: Install Dependencies for create-comment-reaction
+        working-directory: .github/actions/create-comment-reaction
+        run: yarn install --frozen-lockfile
 
-        - name: Add initial reaction
-          uses: ./.github/actions/create-comment-reaction
-          with:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            comment-id: ${{ github.event.comment.id }}
-            reaction: eyes
+      - name: Add initial reaction
+        uses: ./.github/actions/create-comment-reaction
+        with:
+          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          comment-id: ${{ github.event.comment.id }}
+          reaction: eyes
 
-        # Check for changeset
-        - name: Install changeset cli
-          run: yarn install --frozen-lockfile
+      # issue_comment requires us to checkout the branch
+      # https://github.com/actions/checkout/issues/331#issuecomment-1120113003
+      - name: Checkout pull request branch
+        run: hub pr checkout ${{ github.event.issue.number }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-        - name: Generate Snapshot version
-          run: npx @changesets/cli version --snapshot
-          env: 
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Install Dependencies for create-snapshot-branch
+        working-directory: .github/actions/create-snapshot-branch
+        run: yarn install --frozen-lockfile
 
-        # Create snapshot branch with version commit
-        # (Required to trigger and tag BuildKite publish)
-        - name: Install Dependencies for create-snapshot-branch
-          working-directory: .github/actions/create-snapshot-branch
-          run: yarn install --frozen-lockfile
+      - name: Create snapshot branch
+        uses: ./.github/actions/create-snapshot-branch
+        with:
+          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          ISSUE: ${{ github.event.issue.number }}  
 
-        - name: Create snapshot branch with version commit
-          uses: ./.github/actions/create-snapshot-branch
-          id: create-snapshot-branch
-          with:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            ISSUE: ${{ github.event.issue.number }}  
+      - name: Install changeset cli
+        run: yarn install --frozen-lockfile
 
-        # Create snapshot comment with release tag information
+      - name: Generate Snapshot version
+        run: npx @changesets/cli version --snapshot
+        env: 
+          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
 
-        # Delete snapshot branch
+      - name: Install Dependencies for create-snapshot-version
+        working-directory: .github/actions/create-snapshot-version
+        run: yarn install --frozen-lockfile
 
+      - name: Commit snapshot version to snapshot branch
+        uses: ./.github/actions/create-snapshot-version
+        id: create-snapshot-release
+        env: 
+          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
 
+      - name: Create snapshot comment
+        # uses: ./.github/actions/create-snapshot-comment
+        run: |
+          echo ${{ steps.create-snapshot-release.outputs.SNAPSHOT_RELEASES }}
+        env: 
+          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
 
-
-# name: Snapshot
-
-# on:
-#   issue_comment:
-#     types:
-#       - created
-
-# concurrency: ${{ github.workflow }}-${{ github.ref }}
-
-# jobs:
-#   snapshot:
-#     name: Create Snapshot Release
-#     if: |
-#         github.event.issue.pull_request &&
-#         (github.event.comment.body == '/snapit' || github.event.comment.body == '/snapshot-release')
-#     runs-on: ubuntu-latest
-
-#     steps:
-#       - name: Checkout Repo
-#         uses: actions/checkout@v3
-#         with:
-#           token: ${{ secrets.ACCESS_TOKEN }}
-        
-#       - name: Install Dependencies for create-comment-reaction
-#         working-directory: .github/actions/create-comment-reaction
-#         run: yarn install --frozen-lockfile
-
-#       - name: Add initial reaction
-#         uses: ./.github/actions/create-comment-reaction
-#         with:
-#           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-#           comment-id: ${{ github.event.comment.id }}
-#           reaction: eyes
-      
-#       # issue_comment requires us to checkout the branch
-#       # https://github.com/actions/checkout/issues/331#issuecomment-1120113003
-#       - name: Checkout pull request branch
-#         run: hub pr checkout ${{ github.event.issue.number }}
-#         env:
-#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-#       - name: Install Dependencies for create-snapshot-branch
-#         working-directory: .github/actions/create-snapshot-branch
-#         run: yarn install --frozen-lockfile
-
-#       - name: Create snapshot branch
-#         uses: ./.github/actions/create-snapshot-branch
-#         with:
-#           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-#           ISSUE: ${{ github.event.issue.number }}  
-
-#       - name: Install changeset cli
-#         run: yarn install --frozen-lockfile
-
-#       - name: Generate Snapshot version
-#         run: npx @changesets/cli version --snapshot
-#         env: 
-#           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-
-#       - name: Install Dependencies for create-snapshot-version
-#         working-directory: .github/actions/create-snapshot-version
-#         run: yarn install --frozen-lockfile
-
-#       - name: Commit snapshot version to snapshot branch
-#         uses: ./.github/actions/create-snapshot-version
-#         id: create-snapshot-release
-#         with: 
-#           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-      
-#       - name: Create snapshot comment
-#         # uses: ./.github/actions/create-snapshot-comment
-#         run: |
-#           echo ${{ steps.create-snapshot-release.outputs.SNAPSHOT_RELEASES }}
-#         env: 
-#           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-      
-#       #  - name: Delete snapshot branch
-#       #    uses: ./.github/actions/delete-snapshot-branch
-#       #    env: 
-#       #     GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-
-
+      #  - name: Delete snapshot branch
+      #    uses: ./.github/actions/delete-snapshot-branch
+      #    env: 
+      #     GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
