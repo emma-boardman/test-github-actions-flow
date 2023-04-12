@@ -6,14 +6,23 @@ const main = async () => {
     const issue = core.getInput('ISSUE');
     const snapshots = core.getInput('SNAPSHOTS');
 
+    const comment = "Hi friend! Thanks for creating a snapshot. Test the snapshots by updating your `package.json` with the newly published versions";
+
+    snapshots.forEach(function (snapshot) {
+
+      comment += `\n ${snapshot}`;
+    });
+
     console.log('issue', issue);
     console.log('snapshots', snapshots);
+
+
 
     const octokit = github.getOctokit(token);
 
     octokit.rest.issues.createComment({
         issue_number: issue,
-        body: `HI! ${snapshots}`,
+        body: comment,
         ...github.context.repo,
       });
 
