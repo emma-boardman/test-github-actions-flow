@@ -16,7 +16,6 @@ jobs:
     steps:
       - name: Checkout branch
         uses: actions/checkout@v3
-
       - name: Set up Node with v16.13.0
         uses: actions/setup-node@v3
         with:
