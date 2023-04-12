@@ -13,6 +13,7 @@ const main = async () => {
     octokit.rest.issues.createComment({
         issue_number: issue,
         body: `HI! ${snapshots}`,
+        ...github.context.repo,
       });
 
 }
