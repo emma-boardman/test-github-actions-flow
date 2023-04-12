@@ -90,16 +90,8 @@ async function createReleaseBranch(octokit){
           console.log('✅ Retrived commit tree SHA', currentCommitTreeSha);
 
           const versionFileBlobs = await Promise.all(versionFiles.map(createBlobForFile(octokit)));
-          const pathsForBlobs = versionFiles.map(filePath => path.relative(filePath, __dirname));
-          const pathsForBlobsRev = versionFiles.map(filePath => path.relative(__dirname, filePath));
 
-
-
-          console.log('versionFiles', versionFiles);
-          console.log('pathsForBlobs', pathsForBlobs);
-          console.log('pathsForBlobsRev', pathsForBlobsRev);
-
-          console.log('versionFileBlobs', versionFileBlobs);
+          console.log('✅ Retrived version file blobs', versionFileBlobs);
 
           const newTree = await createNewTree(
             octokit,
@@ -110,7 +102,7 @@ async function createReleaseBranch(octokit){
 
           const newCommit = await createNewCommit(
             octokit,
-            commitMessage,
+            'Snapshot release',
             newTree.sha,
             currentCommitSha
           )
@@ -119,12 +111,23 @@ async function createReleaseBranch(octokit){
        }
     }
 
+    const createNewCommit = async (
+        octokit,
+        message,
+        currentTreeSha,
+        currentCommitSha
+      ) =>
+        (await octokit.rest.git.createCommit({
+          message,
+          tree: currentTreeSha,
+          parents: [currentCommitSha],
+          ...github.context.repo,
+        })).data
+
     const createBlobForFile = (octokit) => async (
         fileName
       ) => {
-        console.log('filename', fileName);
         const content = await fs.readFileSync(fileName).toString();
-        console.log('content', content);
 
         const blobData = await octokit.rest.git.createBlob({
           content,
