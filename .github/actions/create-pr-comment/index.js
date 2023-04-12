@@ -7,6 +7,7 @@ const main = async () => {
     const snapshots = core.getInput('SNAPSHOTS');
 
     console.log('issue', issue);
+    console.log('snapshots', snapshots);
 
     const octokit = github.getOctokit(token);
 
