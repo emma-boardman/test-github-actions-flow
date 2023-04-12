@@ -24,6 +24,7 @@ async function createReleaseBranch(octokit){
     branch = branch.replace('refs/heads/', '');
     const lastCommit = data.head.sha;
     const snapshotBranch = `refs/heads/snapshot-release/${branch}`;
+    const snapshotRef = `heads/snapshot-release/${branch}`;
 
     // Check if branch exists
     try {
@@ -35,8 +36,8 @@ async function createReleaseBranch(octokit){
         // console.log('what is returned if a branch is found?', getBranchData);
 
         // if branch exists, delete and recreate with latest commit
-        const {data: deleteRefData} = await octokit.rest.git.deleteBranch({
-            branch: snapshotBranch,
+        const {data: deleteRefData} = await octokit.rest.git.deleteRef({
+            ref: snapshotRef,
             ...github.context.repo,
         })
         console.log('what is returned if a branch deleted?', deleteRefData);
