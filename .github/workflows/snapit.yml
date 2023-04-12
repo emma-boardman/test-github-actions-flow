@@ -92,7 +92,7 @@ jobs:
         with: 
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           ISSUE: ${{ github.event.issue.number }}
-          SNAPSHOTS: ${{ steps.create-snapshot-release.outputs.SNAPSHOT_RELEASES }}
+          SNAPSHOTS: ${{ steps.check-for-version-files.outputs.SNAPSHOT_RELEASES }}
 
       #  - name: Delete snapshot branch
       #    uses: ./.github/actions/delete-snapshot-branch
