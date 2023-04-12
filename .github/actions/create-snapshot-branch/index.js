@@ -94,6 +94,7 @@ async function createReleaseBranch(octokit){
 
 
 
+          console.log('versionFiles', versionFiles);
           console.log('pathsForBlobs', pathsForBlobs);
           console.log('pathsForBlobsRev', pathsForBlobsRev);
 
@@ -102,7 +103,7 @@ async function createReleaseBranch(octokit){
           const newTree = await createNewTree(
             octokit,
             versionFileBlobs,
-            pathsForBlobs,
+            versionFiles,
             currentCommitTreeSha
           )
 
@@ -121,6 +122,8 @@ async function createReleaseBranch(octokit){
         fileName
       ) => {
         const content = await fs.readFileSync(fileName).toString();
+
+
         const blobData = await octokit.git.createBlob({
           content,
           ...github.context.repo,
@@ -182,8 +185,8 @@ async function createReleaseBranch(octokit){
           // Status codes: https://git-scm.com/docs/git-status
           const status = fileDetails[0];
           const name = fileDetails.pop();
-      
-          return name;
+          // Ignore deleted files
+          return status === 'D' ? null : name;
         });
       }
 
