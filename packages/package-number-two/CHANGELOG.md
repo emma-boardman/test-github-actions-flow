@@ -1,5 +1,11 @@
 # @mini-monorepo/package-number-two
 
+## 0.0.0-20230412153457
+
+### Minor Changes
+
+- [#25](https://github.com/emma-boardman/test-github-actions-flow/pull/25) [`e2ca299`](https://github.com/emma-boardman/test-github-actions-flow/commit/e2ca2993a80f379d1d33ed945180af42094c68b5) Thanks [@emma-boardman](https://github.com/emma-boardman)! - Yup
+
 ## 3.0.0
 
 ### Major Changes
