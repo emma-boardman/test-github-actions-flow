@@ -34,11 +34,22 @@ jobs:
         env: 
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
 
+      - name: Check for Changeset Version Files
+        id: check-for-version-files
+        uses: .github/actions/check-version-files
+
+      - name: Create no-changeset comment
+        if: ${{ !steps.check-for-version-files.output.HAS_CHANGESET }}
+        run: |
+          echo "Snapshot release could not be created. Be sure to add a changeset to your PR."
+
       - name: Install Dependencies for create-snapshot-branch
+        if: steps.check-for-version-files.output.HAS_CHANGESET
         working-directory: .github/actions/create-snapshot-branch
         run: yarn install --frozen-lockfile
 
       - name: Create snapshot branch
+        if: ${{ success() }}
         uses: ./.github/actions/create-snapshot-branch
         with:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}

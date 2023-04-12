@@ -1,0 +1,7 @@
+name: 'Check version files'
+branding:
+  icon: shopping-bag
+  colour: green
+runs:
+  using: 'node16'
+  main: 'index.js'
