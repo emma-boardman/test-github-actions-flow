@@ -121,8 +121,9 @@ async function createReleaseBranch(octokit){
     const createBlobForFile = (octokit) => async (
         fileName
       ) => {
+        console.log('filename', fileName);
         const content = await fs.readFileSync(fileName).toString();
-
+        console.log('content', content);
 
         const blobData = await octokit.git.createBlob({
           content,
