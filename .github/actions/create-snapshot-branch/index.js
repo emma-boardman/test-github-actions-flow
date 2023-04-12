@@ -35,11 +35,11 @@ async function createReleaseBranch(octokit){
         // console.log('what is returned if a branch is found?', getBranchData);
 
         // if branch exists, delete and recreate with latest commit
-        const {data: deleteRefData} = await octokit.rest.git.deleteRef({
-            ref: snapshotBranch,
-            ...github.context.repo,
-        })
-        console.log('what is returned if a branch deleted?', deleteRefData);
+        // const {data: deleteRefData} = await octokit.rest.git.deleteRef({
+        //     ref: snapshotBranch,
+        //     ...github.context.repo,
+        // })
+        // console.log('what is returned if a branch deleted?', deleteRefData);
 
         // Finally, create fresh branch with latest commit
         // await createBranchRef(snapshotBranch, lastCommit);
