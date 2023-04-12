@@ -38,8 +38,7 @@ jobs:
 
       - name: Generate Snapshot version
         run: |
-          npx @changesets/changelog-github
-          npx @changesets/cli version --snapshot
+          yarn global add @changesets/changelog-github && npx @changesets/cli version --snapshot
         env: 
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
 
