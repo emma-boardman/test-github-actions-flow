@@ -52,27 +52,26 @@ jobs:
         working-directory: .github/actions/create-snapshot-branch
         run: yarn install --frozen-lockfile
 
-      - name: Create snapshot branch
-        if: ${{ success() }}
+      - name: Create snapshot branch with version commit
+        id: create-snapshot-branch
+        if: steps.check-for-version-files.output.HAS_CHANGESET
         uses: ./.github/actions/create-snapshot-branch
         with:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           ISSUE: ${{ github.event.issue.number }}  
 
-      - name: Install Dependencies for create-snapshot-version
-        working-directory: .github/actions/create-snapshot-version
-        run: yarn install --frozen-lockfile
+      - name: Create branch-failure comment
+        if: ${{ !steps.create-snapshot-branch.output.SNAPSHOT_BRANCH_CREATED }}
+        run: |
+          echo "Snapshot branch could not be created. Check the Actions log, or reach out in #online-store-ui-library on Slack."
 
-      - name: Commit snapshot version to snapshot branch
-        uses: ./.github/actions/create-snapshot-version
-        id: create-snapshot-release
-        env: 
-          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+     
 
       - name: Create snapshot comment
+        if: ${{ !steps.create-snapshot-branch.output.SNAPSHOT_BRANCH_CREATED }}
         # uses: ./.github/actions/create-snapshot-comment
         run: |
-          echo ${{ steps.create-snapshot-release.outputs.SNAPSHOT_RELEASES }}
+          echo "${{ steps.create-snapshot-release.outputs.SNAPSHOT_RELEASES }} are being published to Cloudsmith"
         env: 
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
 
