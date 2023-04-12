@@ -36,9 +36,13 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
 
+      - name: Install changesets
+        run: yarn global add @changesets/changelog-github
+        env: 
+          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+
       - name: Generate Snapshot version
-        run: |
-          yarn global add @changesets/changelog-github && npx @changesets/cli version --snapshot
+        run: npx @changesets/cli version --snapshot
         env: 
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
 
