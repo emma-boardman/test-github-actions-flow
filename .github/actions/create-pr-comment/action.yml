@@ -1,0 +1,17 @@
+name: 'Create PR comment'
+branding:
+  icon: shopping-bag
+  colour: green
+inputs:
+  GITHUB_TOKEN:
+    description: 'GitHub access token'
+    required: true
+  ISSUE:
+    descripton: 'PR number'
+    required: true
+  SNAPSHOTS:
+    descripton: 'Version numbers'
+    required: false
+runs:
+  using: 'node16'
+  main: 'index.js'

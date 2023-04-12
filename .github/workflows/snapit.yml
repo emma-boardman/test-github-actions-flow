@@ -82,13 +82,17 @@ jobs:
         run: |
           echo "Snapshot branch could not be created. Check the Actions log, or reach out in #online-store-ui-library on Slack."
 
+      - name: Install Dependencies for create-pr-comment
+        working-directory: .github/actions/create-pr-comment
+        run: yarn install --frozen-lockfile
+
       - name: Create snapshot comment
         if: ${{ steps.check-for-version-files.outputs.HAS_CHANGESET && steps.create-snapshot-branch.outputs.SNAPSHOT_BRANCH_CREATED }}
-        # uses: ./.github/actions/create-snapshot-comment
-        run: |
-          echo "${{ steps.create-snapshot-release.outputs.SNAPSHOT_RELEASES }} are being published to Cloudsmith"
-        env: 
+        uses: ./.github/actions/create-pr-comment
+        with: 
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          ISSUE: ${{ github.event.issue.number }}
+          SNAPSHOTS: ${{ steps.create-snapshot-release.outputs.SNAPSHOT_RELEASES }}
 
       #  - name: Delete snapshot branch
       #    uses: ./.github/actions/delete-snapshot-branch

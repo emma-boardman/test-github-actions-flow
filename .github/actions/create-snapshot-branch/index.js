@@ -16,7 +16,9 @@ const main = async () => {
 
     const {branch, sha} = branchDetails;
 
-    await createVersionCommit(octokit, branch, sha);
+    const result = await createVersionCommit(octokit, branch, sha);
+
+    core.setOutput('SNAPSHOT_BRANCH_CREATED', true);
 }
 
 async function createReleaseBranch(octokit){
@@ -107,6 +109,8 @@ async function createReleaseBranch(octokit){
             currentCommitSha
           )
           await setBranchToCommit(octokit, branch, newCommit.sha)
+
+          return "WIN"
 
        }
     }
