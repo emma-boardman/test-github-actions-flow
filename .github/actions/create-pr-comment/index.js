@@ -4,9 +4,13 @@ const github = require('@actions/github');
 const main = async () => {
     const token = core.getInput('GITHUB_TOKEN');
     const issue = core.getInput('ISSUE');
-    const snapshots = core.getInput('SNAPSHOTS');
+    let snapshots = core.getInput('SNAPSHOTS');
 
     const comment = "Hi friend! Thanks for creating a snapshot. Test the snapshots by updating your `package.json` with the newly published versions";
+
+    console.log(typeof snapshots);
+
+    snapshots = snapshots.replace(/"([^"]*)"/g, '$1').replace("[", "").replace("]", "").split(",");
 
     snapshots.forEach(function (snapshot) {
 
@@ -15,8 +19,6 @@ const main = async () => {
 
     console.log('issue', issue);
     console.log('snapshots', snapshots);
-
-
 
     const octokit = github.getOctokit(token);
 
