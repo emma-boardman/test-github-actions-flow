@@ -102,7 +102,7 @@ async function createReleaseBranch(octokit){
           const newTree = await createNewTree(
             octokit,
             versionFileBlobs,
-            versionFiles,
+            pathsForBlobs,
             currentCommitTreeSha
           )
 
