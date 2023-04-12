@@ -178,16 +178,33 @@ async function createReleaseBranch(octokit){
         const uncomittedVersionFiles = files.filter((file) =>
           versionFileIdentifiers.test(file),
         );
+
+        return uncomittedVersionFiles.reduce(function(isModified, file) {
+        // Initial Status format: XY PATH
+        const fileDetails = file.replace(/^\s+/, '').split(/[ ]/);
+        // Status codes: https://git-scm.com/docs/git-status
+        const status = fileDetails[0];
+        const name = fileDetails.pop();
+          if (status !== 'D') {
+             isModified.push(name);
+          }
+          return isModified;
+        }, []);
       
-        return uncomittedVersionFiles.map((file) => {
-          // Initial Status format: XY PATH
-          const fileDetails = file.replace(/^\s+/, '').split(/[ ]/);
-          // Status codes: https://git-scm.com/docs/git-status
-          const status = fileDetails[0];
-          const name = fileDetails.pop();
-          // Ignore deleted files
-          return status === 'D' ? null : name;
-        });
+        // return uncomittedVersionFiles.map((file) => {
+        //   // Initial Status format: XY PATH
+        //   const fileDetails = file.replace(/^\s+/, '').split(/[ ]/);
+        //   // Status codes: https://git-scm.com/docs/git-status
+        //   const status = fileDetails[0];
+        //   const name = fileDetails.pop();
+        //   // Ignore deleted files
+        //   return status === 'D' ? null : name;
+        // });
+
+
+
+
+
       }
 
     // async function create
