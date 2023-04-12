@@ -41,8 +41,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
 
-      - name: Install changeset cli
-        run: yarn install --frozen-lockfile
+      - name: Install changesets
+        run: yarn global add @changesets/changelog-github --frozen-lockfile
 
       - name: Generate Snapshot version
         run: npx @changesets/cli version --snapshot
