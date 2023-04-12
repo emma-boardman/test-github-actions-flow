@@ -2,6 +2,10 @@ name: 'Check version files'
 branding:
   icon: shopping-bag
   colour: green
+inputs:
+  reaction:
+    description: 'Reaction type'
+    required: false
 runs:
   using: 'node16'
   main: 'index.js'
