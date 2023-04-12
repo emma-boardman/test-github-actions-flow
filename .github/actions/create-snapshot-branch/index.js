@@ -6,7 +6,6 @@ const issue = core.getInput('ISSUE');
 const octokit = github.getOctokit(token);
 
 const main = async () => {
-    console.log('do i have access to issue?', issue);
     await createReleaseBranch(octokit);
 
 }
@@ -28,11 +27,12 @@ async function createReleaseBranch(octokit){
 
     // Check if branch exists
     try {
-        const {data: getBranchData} = await octokit.rest.repos.getBranch({
+         await octokit.rest.repos.getBranch({
             ...github.context.repo,
             branch: snapshotBranch,
         });
-        console.log('what is returned if a branch is found?', getBranchData);
+
+        // console.log('what is returned if a branch is found?', getBranchData);
 
         // if branch exists, delete and recreate with latest commit
         const {data: deleteRefData} = await octokit.rest.git.deleteRef({
@@ -42,14 +42,16 @@ async function createReleaseBranch(octokit){
         console.log('what is returned if a branch deleted?', deleteRefData);
 
         // Finally, create fresh branch with latest commit
-        await createBranchRef(snapshotBranch, lastCommit);
+        // await createBranchRef(snapshotBranch, lastCommit);
 
     } catch (error) {
         // if branch does not exist, create new branch w/ snapshot PR commit
         if (error.name === 'HttpError' && error.status === 404){
+            console.log(`no branch called ${snapshotBranch}`)
             await createBranchRef(snapshotBranch, lastCommit);
         }
         else {
+            console.log("different error")
             throw Error(error);
           }
     }
