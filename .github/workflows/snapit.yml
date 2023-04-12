@@ -8,17 +8,17 @@ on:
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
 jobs:
-    snapit:
-      name: Snapshot Release
-      if: |
+  snapit:
+    name: Snapshot Release
+    if: |
         github.event.issue.pull_request &&
         (github.event.comment.body == '/snapit' || github.event.comment.body == './snapshot-release')
-      runs-on: ubuntu-latest
-      steps:
-        - name: Set up Node with v16.13.0
-          uses: actions/setup-node@v3
-          with:
-            node-version: 16.13.0
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Node with v16.13.0
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.13.0
 
           # Add comment reaction
           - name: Install dependencies for create-comment-reaction
@@ -61,22 +61,8 @@ jobs:
 
 
 
-# name: Snapshot
 
-# on:
-#   issue_comment:
-#     types:
-#       - created
 
-# concurrency: ${{ github.workflow }}-${{ github.ref }}
-
-# jobs:
-#   snapshot:
-#     name: Create Snapshot Release
-#     if: |
-#         github.event.issue.pull_request &&
-#         (github.event.comment.body == '/snapit' || github.event.comment.body == '/snapshot-release')
-#     runs-on: ubuntu-latest
 
 #     steps:
 #       - name: Checkout Repo
