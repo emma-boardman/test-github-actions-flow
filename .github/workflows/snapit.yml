@@ -8,54 +8,55 @@ on:
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
 jobs:
-  snapit:
-    if: |
-      github.event.issue.pull_request &&
-      (github.event.comment.body == '/snapit' || github.event.comment.body == './snapshot-release')
-    runs-on: ubuntu-latest
-    steps:
-      - name: Set up Node with v16.13.0
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16.13.0
-
-        # Add comment reaction
-        - name: Install dependencies for create-comment-reaction
-          working-directory: .github/actions/create-comment-reaction
-          run: yarn install --frozen-lockfile
-
-        - name: Add initial reaction
-          uses: ./.github/actions/create-comment-reaction
+    snapit:
+      name: Snapshot Release
+      if: |
+        github.event.issue.pull_request &&
+        (github.event.comment.body == '/snapit' || github.event.comment.body == './snapshot-release')
+      runs-on: ubuntu-latest
+      steps:
+        - name: Set up Node with v16.13.0
+          uses: actions/setup-node@v3
           with:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            comment-id: ${{ github.event.comment.id }}
-            reaction: eyes
+            node-version: 16.13.0
 
-        # Check for changeset
-        - name: Install changeset cli
-          run: yarn install --frozen-lockfile
+          # Add comment reaction
+          - name: Install dependencies for create-comment-reaction
+            working-directory: .github/actions/create-comment-reaction
+            run: yarn install --frozen-lockfile
 
-        - name: Generate Snapshot version
-          run: npx @changesets/cli version --snapshot
-          env: 
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          - name: Add initial reaction
+            uses: ./.github/actions/create-comment-reaction
+            with:
+              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              comment-id: ${{ github.event.comment.id }}
+              reaction: eyes
 
-        # Create snapshot branch with version commit
-        # (Required to trigger and tag BuildKite publish)
-        - name: Install Dependencies for create-snapshot-branch
-          working-directory: .github/actions/create-snapshot-branch
-          run: yarn install --frozen-lockfile
+          # Check for changeset
+          - name: Install changeset cli
+            run: yarn install --frozen-lockfile
 
-        - name: Create snapshot branch with version commit
-          uses: ./.github/actions/create-snapshot-branch
-          id: create-snapshot-branch
-          with:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            ISSUE: ${{ github.event.issue.number }}  
+          - name: Generate Snapshot version
+            run: npx @changesets/cli version --snapshot
+            env: 
+              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-        # Create snapshot comment with release tag information
+          # Create snapshot branch with version commit
+          # (Required to trigger and tag BuildKite publish)
+          - name: Install Dependencies for create-snapshot-branch
+            working-directory: .github/actions/create-snapshot-branch
+            run: yarn install --frozen-lockfile
 
-        # Delete snapshot branch
+          - name: Create snapshot branch with version commit
+            uses: ./.github/actions/create-snapshot-branch
+            id: create-snapshot-branch
+            with:
+              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              ISSUE: ${{ github.event.issue.number }}  
+
+          # Create snapshot comment with release tag information
+
+          # Delete snapshot branch
 
 
 
