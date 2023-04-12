@@ -50,7 +50,7 @@ async function createReleaseBranch(octokit){
     } catch (error) {
         // if branch does not exist, create new branch with the latest commit
         if (error.name === 'HttpError' && error.status === 404){
-            await createBranchRef(snapshotBranch, lastCommit);
+            return await createBranchRef(snapshotBranch, lastCommit);
         }
         else {
             throw Error(error);
@@ -80,8 +80,7 @@ async function createReleaseBranch(octokit){
 
            // Get commit tree sha
            const { data: commitData } = await octokit.rest.git.getCommit({
-            owner: org,
-            repo,
+            ...github.context.repo,
             commit_sha: currentCommitSha,
           })
 
