@@ -12,7 +12,7 @@ const main = async () => {
 }
 
 async function createReleaseBranch(octokit){
-    console.log('do i have access to github context?');
+    console.log('do i have access to github context?', github.context.repo);
 
     // Get PR information
     const {data} = await octokit.rest.pulls.get({

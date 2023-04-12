@@ -65,7 +65,9 @@ jobs:
       - name: Install Dependencies for create-snapshot-branch
         if: steps.check-for-version-files.outputs.HAS_CHANGESET
         working-directory: .github/actions/create-snapshot-branch
-        run: yarn install --frozen-lockfile
+        run: |
+          echo ${{ steps.create-snapshot-release.outputs.SNAPSHOT_RELEASES }}
+          yarn install --frozen-lockfile
 
       - name: Create snapshot branch with version commit
         id: create-snapshot-branch
