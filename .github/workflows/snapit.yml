@@ -29,6 +29,11 @@ jobs:
           comment-id: ${{ github.event.comment.id }}
           reaction: eyes
 
+      - name: Generate Snapshot version
+          run: npx @changesets/cli version --snapshot
+          env: 
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Install Dependencies for create-snapshot-branch
         working-directory: .github/actions/create-snapshot-branch
         run: yarn install --frozen-lockfile
@@ -38,14 +43,6 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           ISSUE: ${{ github.event.issue.number }}  
-
-      - name: Install changeset cli
-        run: yarn install --frozen-lockfile
-
-      - name: Generate Snapshot version
-        run: npx @changesets/cli version --snapshot
-        env: 
-          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
 
       - name: Install Dependencies for create-snapshot-version
         working-directory: .github/actions/create-snapshot-version
