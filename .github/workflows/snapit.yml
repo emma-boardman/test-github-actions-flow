@@ -33,12 +33,19 @@ jobs:
           comment-id: ${{ github.event.comment.id }}
           reaction: eyes
 
-      # issue_comment requires us to checkout the branch
-      # https://github.com/actions/checkout/issues/331#issuecomment-1120113003
-      - name: Checkout pull request branch
-        run: hub pr checkout ${{ github.event.issue.number }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+       - name: Generate Snapshot version
+          run: npx @changesets/cli version --snapshot
+          env: 
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      
+
+      # # issue_comment requires us to checkout the branch
+      # # https://github.com/actions/checkout/issues/331#issuecomment-1120113003
+      # - name: Checkout pull request branch
+      #   run: hub pr checkout ${{ github.event.issue.number }}
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install Dependencies for create-snapshot-branch
         working-directory: .github/actions/create-snapshot-branch
