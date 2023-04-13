@@ -78,7 +78,7 @@ jobs:
         with: 
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           ISSUE: ${{ github.event.issue.number }}
-          MESSAGE: "⚠️ **Error creating snapshot branch* ⚠️ \n\n Please reach out in [#online-store-ui](https://shopify.slack.com/archives/CJL1EMP88)."
+          MESSAGE: "⚠️ **Error creating snapshot branch** ⚠️ \n\n Please reach out in [#online-store-ui](https://shopify.slack.com/archives/CJL1EMP88)."
 
       - name: Create snapshot comment
         uses: actions/github-script@v6
