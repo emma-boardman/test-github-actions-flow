@@ -40,7 +40,7 @@ jobs:
         run: yarn install --frozen-lockfile
 
       - name: Generate Snapshot version
-        run: npx @changesets/cli version --snapshot
+        run: npx @changesets/cli version --snapshot snapshot-release
         env: 
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
 
