@@ -29,8 +29,8 @@ const main = async () => {
       `Test the snapshot${multiple ? 's' : ''} by updating your \`package.json\` ` +
       `with the newly published version${multiple ? 's' : ''}:\n` +
        `${snapshotMarkup}` + `\n\n` +
-       `If you encounter any issues with your snapshots, look at the online-store-ui-snapshot-publish pipeline](link-when-it-exists) logs,` +
-       `or reach out in [#online-store-ui](https://shopify.slack.com/archives/CJL1EMP88)\n`
+       `If you encounter any issues with your snapshots, deployment logs can be found on the [online-store-ui-snapshot-publish pipeline](link-when-it-exists) logs,` +
+       `You can also reach out in [#online-store-ui-library](https://shopify.slack.com/archives/CJL1EMP88)\n`
     )
 
   const octokit = github.getOctokit(token);
