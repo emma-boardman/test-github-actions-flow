@@ -14,6 +14,7 @@ const main = async () => {
         const branchDetails = await createReleaseBranch(octokit);
         const {branch, sha} = branchDetails;
         await createVersionCommit(octokit, branch, sha);
+        core.setOutput('SNAPSHOT_BRANCH_REF', branch.replace('refs/', ''));
       }
       catch (err) {
         core.setFailed(`Failed to create snapshot branch and commit: ${err}`);
