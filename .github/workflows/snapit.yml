@@ -123,13 +123,12 @@ jobs:
 
       - name: Delete snapshot branch
         uses: actions/github-script@v6
-        working-directory: .github
         env:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           BRANCH_REF: ${{ steps.create-snapshot-branch.outputs.SNAPSHOT_BRANCH_REF }}
         with: 
           script: |
-            const deleteRef = require('/utilities/octokit.js');
+            const deleteRef = require('.github/utilities/octokit.js');
             const branchRef = core.getInput('BRANCH_REF');
             console.log('branch ref', branchRef);
             console.log('branch ref 2', steps.create-snapshot-branch.outputs.SNAPSHOT_BRANCH_REF);
