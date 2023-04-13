@@ -81,38 +81,13 @@ jobs:
           MESSAGE: "⚠️ **Error creating snapshot branch** ⚠️ \n\n Please reach out in [#online-store-ui](https://shopify.slack.com/archives/CJL1EMP88)."
 
       - name: Create snapshot comment
-        uses: actions/github-script@v6
-        env:
-          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        if: ${{ steps.check-for-version-files.outputs.SNAPSHOT_RELEASES }}
+        uses: ./.github/actions/create-snapshot-comment
         with:
-          script: |
-            const fs = require('fs');
-            const snapshots = fs.readFileSync(snapshotTags.log);
-            console.log(typeof snapshots, snapshots);
-            
-            const newTags = Array
-              .from(snapshots.matchAll(/New tag:\s+([^\s\n]+)/g))
-              .map(([_, tag]) => tag)
-            if (newTags.length) {
-              const multiple = newTags.length > 1
-              const body = (
-                `🫰✨ **Thanks @${context.actor}! ` +
-                `Your snapshot${multiple ? 's have' : ' has'} been published to [Cloudsmith](https://cloudsmith.io/~shopify/packages/?q=online-store-ui).**\n\n` +
-                `Test the snapshot${multiple ? 's' : ''} by updating your \`package.json\` ` +
-                `with the newly published version${multiple ? 's' : ''}:\n` +
-                newTags.map(tag => (
-                  '```sh\n' +
-                  `yarn add ${tag}\n` +
-                  '```'
-                )).join('\n')
-              )
-              await github.rest.issues.createComment({
-                issue_number: context.issue.number,
-                body,
-                ...context.repo
-              })
-            }
-
+          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          ISSUE: ${{ github.event.issue.number }}
+          SNAPSHOTS: ${{ steps.check-for-version-files.outputs.SNAPSHOT_RELEASES }}
+  
       - name: Add rocket reaction
         if: success()
         uses: ./.github/actions/create-comment-reaction
@@ -122,15 +97,8 @@ jobs:
           reaction: rocket
 
       - name: Delete snapshot branch
-        uses: actions/github-script@v6
-        env:
+        uses: ./.github/actions/delete-snapshot-branch
+        with:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           BRANCH_REF: ${{ steps.create-snapshot-branch.outputs.SNAPSHOT_BRANCH_REF }}
-        with: 
-          script: |
-            const deleteRef = require('.github/utilities/octokit.js');
-            const branchRef = core.getInput('BRANCH_REF');
-            console.log('branch ref', branchRef);
-            console.log('branch ref 2', steps.create-snapshot-branch.outputs.SNAPSHOT_BRANCH_REF);
-            console.log('context', github)
-            deleteRef(octokit, branchRef, github);
+

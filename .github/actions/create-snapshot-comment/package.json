@@ -1,0 +1,13 @@
+{
+    "name": "create-release-notes",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "author": "Me",
+    "license": "MIT",
+    "dependencies": {
+      "@actions/core": "^1.10.0",
+      "@actions/github": "^5.1.1"
+    }
+  }
+  

@@ -30,13 +30,6 @@ const main = async () => {
 
     core.setOutput('SNAPSHOT_RELEASES', snapshotReleases);
     core.setOutput('HAS_CHANGESET', snapshotReleases.length > 0);
-
-    // Make tags available to actions/github-script@v6, 
-    fs.writeFile('snapshotTags.log', snapshotReleases, function (err) {
-      if (err) {
-        return console.log(`Error saving snapshot tags: ${err}`);
-      }
-    });
 }
     
 main().catch((err) => core.setFailed(err.message));
