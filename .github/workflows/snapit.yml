@@ -18,11 +18,6 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v3
 
-      - name: Setup Node with v16.13.0
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16.13.0
-
       - name: Install Dependencies for create-comment-reaction
         working-directory: .github/actions/create-comment-reaction
         run: yarn install --frozen-lockfile
@@ -57,10 +52,17 @@ jobs:
         id: check-for-version-files
         uses: ./.github/actions/check-version-files
 
+      - name: Install Dependencies for create-pr-comment
+        working-directory: .github/actions/create-pr-comment
+        run: yarn install --frozen-lockfile
+
       - name: Create no-changeset comment
         if: ${{ !steps.check-for-version-files.outputs.HAS_CHANGESET }}
-        run: |
-          echo "Snapshot release could not be created. Be sure to add a changeset to your PR."
+        uses: ./.github/actions/create-pr-comment
+        with: 
+          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          ISSUE: ${{ github.event.issue.number }}
+          MESSAGE: "**Error creating `/snapit` release**. No changesets were found. \n To enable `/snapit` functionality, please add a changeset using `yarn changeset`. \n If you have added a changeset and are still encountering this error, please reach out in [#online-store-ui](https://shopify.slack.com/archives/CJL1EMP88) on Slack."
 
       - name: Install Dependencies for create-snapshot-branch
         if: steps.check-for-version-files.outputs.HAS_CHANGESET
@@ -82,10 +84,6 @@ jobs:
         run: |
           echo "Snapshot branch could not be created. Check the Actions log, or reach out in #online-store-ui-library on Slack."
 
-      - name: Install Dependencies for create-pr-comment
-        working-directory: .github/actions/create-pr-comment
-        run: yarn install --frozen-lockfile
-
       - name: Create snapshot comment
         if: ${{ steps.check-for-version-files.outputs.HAS_CHANGESET && steps.create-snapshot-branch.outputs.SNAPSHOT_BRANCH_CREATED }}
         uses: ./.github/actions/create-pr-comment
@@ -93,6 +91,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           ISSUE: ${{ github.event.issue.number }}
           SNAPSHOTS: ${{ steps.check-for-version-files.outputs.SNAPSHOT_RELEASES }}
+          MESSAGE: ""
 
       #  - name: Delete snapshot branch
       #    uses: ./.github/actions/delete-snapshot-branch
