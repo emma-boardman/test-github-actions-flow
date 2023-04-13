@@ -3,7 +3,6 @@ const {getPackages} = require('@manypkg/get-packages');
 
 
 const main = async () => {
-  console.log('hello?')
   const cwd = process.cwd();
 
   const {packages} = await getPackages(cwd);
@@ -15,6 +14,9 @@ const main = async () => {
 
       const pkgName = packageJson.name;
       const localVersion = packageJson.version;
+
+      console.log('local', packageJson.version);
+      console.log('full package', packageJson);
 
       if (localVersion.includes('snapshot')){
         snapshotReleases.push(`${pkgName}@${localVersion}`);
