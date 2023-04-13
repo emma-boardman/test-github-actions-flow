@@ -4,7 +4,6 @@ const {getPackages} = require('@manypkg/get-packages');
 
 
 const main = async () => {
-  console.log('hello?')
   const cwd = process.cwd();
 
   const {packages} = await getPackages(cwd);
