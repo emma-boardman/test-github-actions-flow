@@ -9,16 +9,15 @@ const issue = core.getInput('ISSUE');
 const octokit = github.getOctokit(token);
 
 const main = async () => {
-    
-    const branchDetails = await createReleaseBranch(octokit);
-
-    console.log('branch', branchDetails);
-
-    const {branch, sha} = branchDetails;
-
-    const result = await createVersionCommit(octokit, branch, sha);
-
-    core.setOutput('SNAPSHOT_BRANCH_CREATED', true);
+  
+      try {
+        const branchDetails = await createReleaseBranch(octokit);
+        const {branch, sha} = branchDetails;
+        await createVersionCommit(octokit, branch, sha);
+      }
+      catch (err) {
+        core.setFailed(`Failed to create snapshot branch and commit: ${err}`);
+      }
 }
 
 async function createReleaseBranch(octokit){
