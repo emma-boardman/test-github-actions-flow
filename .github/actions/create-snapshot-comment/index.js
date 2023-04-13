@@ -29,7 +29,7 @@ const main = async () => {
       `Test the snapshot${multiple ? 's' : ''} by updating your \`package.json\` ` +
       `with the newly published version${multiple ? 's' : ''}:\n` +
        `${snapshotMarkup}` + `\n\n` +
-       `If you encounter any issues with your snapshots, deployment logs can be found on the [online-store-ui-snapshot-publish pipeline](link-when-it-exists) logs,` +
+       `If you encounter any issues with your snapshots, deployment logs can be found in [Buildkite](add-link-when-pipeline-exists).` +
        `You can also reach out in [#online-store-ui-library](https://shopify.slack.com/archives/CJL1EMP88)\n`
     )
 
