@@ -18,8 +18,8 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v3
 
-      - name: Install Dependencies for create-comment-reaction
-        working-directory: .github/actions/create-comment-reaction
+      - name: Install Dependencies for osui-github actions
+        working-directory: .github/actions
         run: yarn install --frozen-lockfile
 
       - name: Add initial reaction
@@ -44,17 +44,9 @@ jobs:
         env: 
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
 
-      - name: Install Dependencies for check-version-files
-        working-directory: .github/actions/check-version-files
-        run: yarn install --frozen-lockfile
-
       - name: Check for Changeset Version Files
         id: check-for-version-files
         uses: ./.github/actions/check-version-files
-
-      - name: Install Dependencies for create-pr-comment
-        working-directory: .github/actions/create-pr-comment
-        run: yarn install --frozen-lockfile
 
       - name: Create no-changeset comment
         if: ${{ !steps.check-for-version-files.outputs.HAS_CHANGESET }}
@@ -63,13 +55,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           ISSUE: ${{ github.event.issue.number }}
           MESSAGE: "**Error creating `/snapit` release**. No changesets were found. \n To enable `/snapit` functionality, please add a changeset using `yarn changeset`. \n If you have added a changeset and are still encountering this error, please reach out in [#online-store-ui](https://shopify.slack.com/archives/CJL1EMP88) on Slack."
-
-      - name: Install Dependencies for create-snapshot-branch
-        if: steps.check-for-version-files.outputs.HAS_CHANGESET
-        working-directory: .github/actions/create-snapshot-branch
-        run: |
-          echo ${{ steps.check-for-version-files.outputs.SNAPSHOT_RELEASES }}
-          yarn install --frozen-lockfile
 
       - name: Create snapshot branch with version commit
         id: create-snapshot-branch
