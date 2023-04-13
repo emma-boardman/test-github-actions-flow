@@ -12,7 +12,7 @@ inputs:
   MESSAGE:
     descripton: 'Comment content'
     required: true
-   REACTION:
+  REACTION:
     descripton: 'Comment reaction'
     required: false
 runs:
