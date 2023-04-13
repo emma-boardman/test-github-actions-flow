@@ -78,7 +78,7 @@ jobs:
         with: 
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           ISSUE: ${{ github.event.issue.number }}
-          MESSAGE: "⚠️ **Error creating snapshot branch* ⚠️ \n\n Please reach out in [#online-store-ui](https://shopify.slack.com/archives/CJL1EMP88)."
+          MESSAGE: "Bad message?"
 
         - name: Add rocket reaction
           if: success()
