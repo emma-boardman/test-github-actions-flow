@@ -9,8 +9,11 @@ inputs:
   ISSUE:
     descripton: 'PR number'
     required: true
-  SNAPSHOTS:
-    descripton: 'Version numbers'
+  MESSAGE:
+    descripton: 'Comment content'
+    required: true
+   REACTION:
+    descripton: 'Comment reaction'
     required: false
 runs:
   using: 'node16'

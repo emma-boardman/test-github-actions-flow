@@ -22,9 +22,6 @@ const main = async () => {
     }
 
     if (!snapshotReleases.length > 0) {
-      console.log('this is my expected output');
-      core.info('this is my expected output');
-      core.notice('this is my expected output');
       core.setFailed(
         'No snapshot releases found. Please run `yarn changeset` to add a changeset.',
       );
