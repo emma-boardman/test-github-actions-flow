@@ -84,11 +84,12 @@ jobs:
         uses: actions/github-script@v6
         env:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-          SNAPSHOTS: ${{ steps.check-for-version-files.outputs.SNAPSHOT_RELEASES }}
         with:
           script: |
-            const snapshots = core.getInput('SNAPSHOTS');
-            console.log('snapshots', typeof snapshots, snapshots, steps.check-for-version-files.outputs.SNAPSHOT_RELEASES);
+            const fs = require('fs');
+            const snapshots = fs.readFileSync(snapshotTags.log);
+            console.log(typeof snapshots, snapshots);
+            
             const newTags = Array
               .from(snapshots.matchAll(/New tag:\s+([^\s\n]+)/g))
               .map(([_, tag]) => tag)
@@ -107,9 +108,8 @@ jobs:
               )
               await github.rest.issues.createComment({
                 issue_number: context.issue.number,
-                owner: context.repo.owner,
-                repo: context.repo.repo,
                 body,
+                ...context.repo
               })
             }
 

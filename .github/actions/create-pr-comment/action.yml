@@ -12,9 +12,6 @@ inputs:
   MESSAGE:
     descripton: 'Comment content'
     required: true
-   REACTION:
-    descripton: 'Comment reaction'
-    required: false
 runs:
   using: 'node16'
   main: 'index.js'
