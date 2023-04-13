@@ -7,6 +7,8 @@ const main = async () => {
   const issue = core.getInput('ISSUE');
   let snapshots = core.getInput('SNAPSHOTS');
 
+  console.log('snapshots', typeof snapshots, snapshots);
+
   // Snapshots are returned as a string "["snapshot", "snapshot"]""
   // Revert to array format
   snapshots = snapshots.replace(/"([^"]*)"/g, '$1').replace("[", "").replace("]","").split(',');
@@ -15,7 +17,7 @@ const main = async () => {
 if (newTags.length) {
   const multiple = newTags.length > 1
   const body = (
-    `🫰✨ **Thanks @${context.actor}! ` +
+    `🫰✨ **Thanks @${github.context.actor}! ` +
     `Your snapshot${multiple ? 's have' : ' has'} been published to [Cloudsmith](https://cloudsmith.io/~shopify/packages/?q=online-store-ui)\n\n` +
     `Test the snapshot${multiple ? 's' : ''} by updating your \`package.json\` ` +
     `with the newly published version${multiple ? 's' : ''}:\n` +
@@ -30,7 +32,7 @@ if (newTags.length) {
 
   await octokit.rest.issues.createComment({
       issue_number: issue,
-      body: message,
+      body,
       ...github.context.repo,
     });
 
