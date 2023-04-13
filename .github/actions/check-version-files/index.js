@@ -21,7 +21,14 @@ const main = async () => {
       }
     }
 
-    console.log('snapshot releases', snapshotReleases);
+    if (!snapshotReleases.length > 0) {
+      console.log('this is my expected output');
+      core.info('this is my expected output');
+      core.notice('this is my expected output');
+      core.setFailed(
+        'No snapshot releases found. Please run `yarn changeset` to add a changeset.',
+      );
+    }
 
     core.setOutput('SNAPSHOT_RELEASES', snapshotReleases);
     core.setOutput('HAS_CHANGESET', snapshotReleases.length > 0);
