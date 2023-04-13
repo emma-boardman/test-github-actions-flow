@@ -1,4 +1,5 @@
 const github = require('@actions/github');
+const core = require('@actions/core');
 
 const main = async () => {
     const token = core.getInput('GITHUB_TOKEN');
