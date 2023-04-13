@@ -131,4 +131,7 @@ jobs:
           script: |
             const deleteRef = require('/utilities/octokit.js');
             const branchRef = core.getInput('BRANCH_REF');
+            console.log('branch ref', branchRef);
+            console.log('branch ref 2', steps.create-snapshot-branch.outputs.SNAPSHOT_BRANCH_REF);
+            console.log('context', github)
             deleteRef(octokit, branchRef, github);
