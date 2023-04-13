@@ -80,16 +80,6 @@ jobs:
           ISSUE: ${{ github.event.issue.number }}
           MESSAGE: "⚠️ **Error creating snapshot branch* ⚠️ \n\n Please reach out in [#online-store-ui](https://shopify.slack.com/archives/CJL1EMP88)."
 
-      - name: Create snapshot comment
-        uses: actions/github-script@v6
-        env:
-          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-          SNAPSHOTS: ${{ steps.check-for-version-files.outputs.SNAPSHOT_RELEASES }}
-        with:
-          script: |
-            const snapshots = core.getInput('SNAPSHOTS');
-            console.log('snapshots', typeof snapshots, snapshots);
-
         - name: Add rocket reaction
           if: success()
           uses: ./.github/actions/create-comment-reaction
