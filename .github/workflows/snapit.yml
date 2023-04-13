@@ -88,7 +88,7 @@ jobs:
         with:
           script: |
             const snapshots = core.getInput('SNAPSHOTS');
-            console.log('snapshots', typeof snapshots, snapshots);
+            console.log('snapshots', typeof snapshots, snapshots, steps.check-for-version-files.outputs.SNAPSHOT_RELEASES);
             const newTags = Array
               .from(snapshots.matchAll(/New tag:\s+([^\s\n]+)/g))
               .map(([_, tag]) => tag)
