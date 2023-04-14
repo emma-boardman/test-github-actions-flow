@@ -24,7 +24,8 @@ jobs:
       - name: Setup Node with v16.13.0
         uses: actions/setup-node@v3
         with:
-          node-version: 16.13.0
+          node-version: 16.x
+          cache: 'yarn'
 
       - name: Check for Changeset
         id: check-for-changeset
@@ -35,7 +36,7 @@ jobs:
         id: install-action-dependencies
         if: steps.check-for-changeset.outcome == 'failure'
         working-directory: .github/actions
-        run: npm install
+        run: yarn install --frozen-lockfile
 
       - name: Post PR comment
         if: steps.check-for-changeset.outcome == 'failure'

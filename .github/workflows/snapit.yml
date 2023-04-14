@@ -18,6 +18,12 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v3
 
+      - name: Setup Node with v16.13.0
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+          cache: 'yarn'
+
       - name: Install Dependencies for osui-github actions
         working-directory: .github/actions
         run: yarn install --frozen-lockfile
