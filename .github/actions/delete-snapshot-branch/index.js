@@ -14,6 +14,7 @@ const main = async () => {
     console.log('snapshot', snapshotBranchName);
     console.log('snapshotrer', snapshotBranchRef);
 
+    console.log('github', github);
    // Check if snapshot branch exists
   try {
     await octokit.rest.repos.getBranch({
