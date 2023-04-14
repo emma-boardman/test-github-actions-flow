@@ -7,30 +7,37 @@ const main = async () => {
   const issue = core.getInput('ISSUE');
   let snapshots = core.getInput('SNAPSHOTS');
 
-  // Snapshots are returned as a string "["snapshot", "snapshot"]""
-  // Revert to array format
-  snapshots = snapshots.replace(/"([^"]*)"/g, '$1').replace("[", "").replace("]","").split(',');
+  console.log('snapshots', typeof snapshots, snapshots);
 
-  const newTags = snapshots.map(([_, tag]) => tag)
-if (newTags.length) {
-  const multiple = newTags.length > 1
-  const body = (
-    `🫰✨ **Thanks @${context.actor}! ` +
-    `Your snapshot${multiple ? 's have' : ' has'} been published to [Cloudsmith](https://cloudsmith.io/~shopify/packages/?q=online-store-ui)\n\n` +
-    `Test the snapshot${multiple ? 's' : ''} by updating your \`package.json\` ` +
-    `with the newly published version${multiple ? 's' : ''}:\n` +
-    newTags.map(tag => (
-      '```sh\n' +
-      `yarn add ${tag}\n` +
-      '```'
-    )).join('\n')
-  )
+  // Snapshots are returned as a string "["@shopify/package@0.0.0-snapshot-release-20230413115708", "@shopify/package@0.0.0-snapshot-release-20230413115708"]"
+  // Revert to an array:
+  // (1) Remove brackets
+  // (2) Remove double quotes
+  // (3) Create array
+  snapshots = snapshots.replace(/^\[|\]$/g, '').replace(/"/g, '').split(', '); 
+
+  if (snapshots.length) {
+    const snapshotMarkup =  snapshots.map(tag => (
+        '```sh\n' +
+        `yarn add ${tag}\n` +
+        '```'
+      )).join('\n');
+    const multiple = snapshots.length > 1
+    const body = (
+      `🫰✨ **Thanks @${github.context.actor}! ` +
+      `Your snapshot${multiple ? 's are' : ' is'} being published to [Cloudsmith](https://cloudsmith.io/~shopify/packages/?q=online-store-ui)\n\n` +
+      `Test the snapshot${multiple ? 's' : ''} by updating your \`package.json\` ` +
+      `with the newly published version${multiple ? 's' : ''}:\n` +
+       `${snapshotMarkup}` + `\n\n` +
+       `If you encounter any issues with your snapshots, deployment logs can be found in [Buildkite](add-link-when-pipeline-exists).` +
+       `You can also reach out in [#online-store-ui-library](https://shopify.slack.com/archives/CJL1EMP88)\n`
+    )
 
   const octokit = github.getOctokit(token);
 
   await octokit.rest.issues.createComment({
       issue_number: issue,
-      body: message,
+      body,
       ...github.context.repo,
     });
 
