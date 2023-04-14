@@ -5,16 +5,10 @@ const main = async () => {
     const token = core.getInput('GITHUB_TOKEN');
     const featureBranch = core.getInput('FEATURE_BRANCH');
     const snapshotBranchName = `snapshot-release/${featureBranch}`;
-    const snapshotBranchRef = `refs/heads/snapshot-release/${featureBranch}`;
+    const snapshotBranchRef = `heads/snapshot-release/${featureBranch}`;
  
     const octokit = github.getOctokit(token);
 
-
-    console.log('branchref',featureBranch);
-    console.log('snapshot', snapshotBranchName);
-    console.log('snapshotrer', snapshotBranchRef);
-
-    console.log('github', github);
    // Check if snapshot branch exists
   try {
     await octokit.rest.repos.getBranch({
