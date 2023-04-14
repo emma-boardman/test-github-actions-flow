@@ -1,5 +1,23 @@
 # @mini-monorepo/package-number-two
 
+## 0.0.0-snapshot-release-20230414105130
+
+### Major Changes
+
+- [#33](https://github.com/emma-boardman/test-github-actions-flow/pull/33) [`d1a2824`](https://github.com/emma-boardman/test-github-actions-flow/commit/d1a28246122ee797e460412f5f142444a8a618fd) Thanks [@emma-boardman](https://github.com/emma-boardman)! - ihojpk
+
+### Minor Changes
+
+- [#25](https://github.com/emma-boardman/test-github-actions-flow/pull/25) [`e2ca299`](https://github.com/emma-boardman/test-github-actions-flow/commit/e2ca2993a80f379d1d33ed945180af42094c68b5) Thanks [@emma-boardman](https://github.com/emma-boardman)! - Yup
+
+- [#27](https://github.com/emma-boardman/test-github-actions-flow/pull/27) [`ac9cd4f`](https://github.com/emma-boardman/test-github-actions-flow/commit/ac9cd4f207bd715ffcdd9f58ffdb638214ee7e85) Thanks [@emma-boardman](https://github.com/emma-boardman)! - let's see
+
+### Patch Changes
+
+- [#35](https://github.com/emma-boardman/test-github-actions-flow/pull/35) [`c896c3b`](https://github.com/emma-boardman/test-github-actions-flow/commit/c896c3b6f66ca379535d985fb0a87bd88006a743) Thanks [@emma-boardman](https://github.com/emma-boardman)! - blnmkl;'
+
+- [#34](https://github.com/emma-boardman/test-github-actions-flow/pull/34) [`8a3be29`](https://github.com/emma-boardman/test-github-actions-flow/commit/8a3be297e9f7e2d83640776ea84799fb7ed9132e) Thanks [@emma-boardman](https://github.com/emma-boardman)! - jukughj
+
 ## 3.0.0
 
 ### Major Changes
