@@ -33,11 +33,12 @@ jobs:
 
       - name: Install Dependencies for osui-github actions
         id: install-action-dependencies
-        if: failure()
+        if: steps.check-for-changeset.outcome == 'failure'
         working-directory: .github/actions
         run: yarn install --frozen-lockfile
 
       - name: Post PR comment
+        if: steps.check-for-changeset.outcome == 'failure'
         uses: ./.github/actions/create-pr-comment
         with: 
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
