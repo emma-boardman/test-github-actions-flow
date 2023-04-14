@@ -1,4 +1,4 @@
-name: 'Delete branch'
+name: 'Delete snapshot branch'
 branding:
   icon: shopping-bag
   colour: green
@@ -6,8 +6,8 @@ inputs:
   GITHUB_TOKEN:
     description: 'GitHub access token'
     required: true
-  BRANCH_REF:
-    descripton: 'Branch ref for deletion. Format: `heads/${branch-name} '
+  FEATURE_BRANCH:
+    descripton: 'Feature branch name'
     required: true
 runs:
   using: 'node16'

@@ -1,0 +1,26 @@
+name: Snapit Cleanup
+
+on:
+  pull_request:
+    types: [closed]
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+  snapshot-cleanup:
+    name: Delete snapshot branch after corresponding feature branch has merged
+    if: github.event.pull_request.merged == true && github.event.action == 'closed'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      - name: Install Dependencies for osui-github actions
+        working-directory: .github/actions
+        run: yarn install --frozen-lockfile
+
+      - name: Check for & delete corresponding snapshot branch
+        uses: ./.github/actions/delete-snapshot-branch
+        with:
+          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          FEATURE_BRANCH: ${{ github.ref_name }}
