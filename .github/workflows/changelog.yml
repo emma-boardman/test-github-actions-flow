@@ -28,6 +28,7 @@ jobs:
 
       - name: Check for Changeset
         id: check-for-changeset
+        continue-on-error: true
         run: npx @changesets/cli status --since="origin/main"
 
       - name: Install Dependencies for osui-github actions
