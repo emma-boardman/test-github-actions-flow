@@ -35,7 +35,7 @@ jobs:
         id: install-action-dependencies
         if: steps.check-for-changeset.outcome == 'failure'
         working-directory: .github/actions
-        run: yarn install --frozen-lockfile
+        run: npm install
 
       - name: Post PR comment
         if: steps.check-for-changeset.outcome == 'failure'
@@ -44,7 +44,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           ISSUE: ${{ github.event.pull_request.number }}
           MESSAGE: "###  ⚠️  No Changeset found ⚠️ \n\n Merging this PR will not cause a version bump for any packages. 
-          If these changes should not result in a new version, you're good to go. 
+          If these changes should not result in a new version, please add the `skip changelog` label. \n\n 
           **If these changes should result in a version bump, please run `yarn changeset` to add a changeset.** \n\n 
           Take a look at our [documentation](https://github.com/Shopify/online-store-ui/tree/main/.changeset) to understand how we use changesets in online-store-ui"
          
