@@ -37,7 +37,7 @@ jobs:
         run: yarn install --frozen-lockfile
 
       - name: Post PR comment
-        if: steps.check-for-changeset.outcome == 'failure' && steps.install-action-dependencies.outcome == 'success'
+        if: success()
         uses: ./.github/actions/create-pr-comment
         with: 
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
