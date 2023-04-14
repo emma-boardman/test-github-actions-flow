@@ -42,7 +42,7 @@ jobs:
         uses: ./.github/actions/create-pr-comment
         with: 
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-          ISSUE: ${{ github.event.issue.number }}
+          ISSUE: ${{ github.event.pull_request.number }}
           MESSAGE: "###  ⚠️  No Changeset found ⚠️ \n\n Merging this PR will not cause a version bump for any packages. 
           If these changes should not result in a new version, you're good to go. 
           **If these changes should result in a version bump, please run `yarn changeset` to add a changeset.** \n\n 
