@@ -32,7 +32,7 @@ jobs:
 
       - name: Install Dependencies for osui-github actions
         id: install-action-dependencies
-        if: steps.check-for-changeset.outcome == 'failure'
+        if: failure()
         working-directory: .github/actions
         run: yarn install --frozen-lockfile
 
