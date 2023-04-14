@@ -23,4 +23,4 @@ jobs:
         uses: ./.github/actions/delete-snapshot-branch
         with:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-          FEATURE_BRANCH: ${{ github.pull_request }}
+          FEATURE_BRANCH: ${{ github.event.pull_request }}
