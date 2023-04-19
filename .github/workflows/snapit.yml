@@ -103,7 +103,7 @@ jobs:
           MESSAGE: "⚠️ **Error creating snapshot branch** ⚠️ \n\n Please reach out in [#online-store-ui](https://shopify.slack.com/archives/CJL1EMP88)."
 
       - name: Create snapshot comment
-        if: ${{ steps.check-for-version-files.outputs.SNAPSHOT_RELEASES && steps.create-snapshot-branch.outcome == 'success'  }}
+        if: ${{ steps.check-for-snapshot-versions.outputs.SNAPSHOT_RELEASES && steps.create-snapshot-branch.outcome == 'success'  }}
         uses: ./.github/actions/create-snapshot-comment
         with:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
