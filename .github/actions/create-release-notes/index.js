@@ -8,8 +8,6 @@ const main = async () => {
   const token = core.getInput('GITHUB_TOKEN');
   const tag = core.getInput('PUSHED_TAG').replace('refs/tags/', '');
 
-  console.log('are multiple tags treated as individual events or arrays?', core.getInput('PUSHED_TAG'))
-
   const octokit = github.getOctokit(token);
 
   const [version, packageName] = tag.split('@');
@@ -25,20 +23,14 @@ const main = async () => {
     'CHANGELOG.md',
   );
 
-  console.log('changelog', changelogFileName);
-
   // read Changelog file content
   let changelogContent;
   try {
     changelogContent = fs.readFileSync(changelogFileName).toString();
 
-    console.log('changelog content', changelogContent);
-    
     if(changelogContent) {
 
      const releaseNotes = await getReleaseNotes();
-
-     console.log('release notes', releaseNotes);
 
      return releaseNotes ? await createReleaseNotes(releaseNotes) : null;
     }
@@ -80,7 +72,6 @@ const main = async () => {
       body: releaseNotes,
       ...github.context.repo,
     });
-
   }
 
  
