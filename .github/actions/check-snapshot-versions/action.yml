@@ -1,4 +1,4 @@
-name: 'Check version files'
+name: 'Check snapshot versions'
 branding:
   icon: shopping-bag
   colour: green

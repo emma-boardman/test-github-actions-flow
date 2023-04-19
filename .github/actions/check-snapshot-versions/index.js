@@ -16,19 +16,22 @@ const main = async () => {
       const pkgName = packageJson.name;
       const localVersion = packageJson.version;
 
+      console.log('packages', packages);
+
       if (localVersion.includes('snapshot')){
         snapshotReleases.push(`${pkgName}@${localVersion}`);
       }
     }
 
     if (!snapshotReleases.length > 0) {
+      console.log('no snapshots found')
       core.setFailed(
         'No snapshot releases found. Please run `yarn changeset` to add a changeset.',
       );
     }
 
     core.setOutput('SNAPSHOT_RELEASES', snapshotReleases);
-    core.setOutput('HAS_CHANGESET', snapshotReleases.length > 0);
+    core.setOutput('HAS_SNAPSHOTS', snapshotReleases.length > 0);
 }
     
 main().catch((err) => core.setFailed(err.message));
