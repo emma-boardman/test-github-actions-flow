@@ -25,13 +25,19 @@ const main = async () => {
     'CHANGELOG.md',
   );
 
+  console.log('changelog', changelogFileName);
+
   // read Changelog file content
   let changelogContent;
   try {
     changelogContent = fs.readFileSync(changelogFileName).toString();
+
+    console.log('changelog content', changelogContent);
     
     if(changelogContent) {
      const releaseNotes = await getReleaseNotes();
+
+     console.log('release notes', releaseNotes);
 
      await createReleaseNotes(releaseNotes);
     }
@@ -61,7 +67,7 @@ const main = async () => {
   }
 
   async function createReleaseNotes(releaseNotes){
-    
+
     await octokit.rest.repos.createRelease({
       name: tag,
       tag_name: tag,
