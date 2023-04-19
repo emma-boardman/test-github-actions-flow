@@ -1,5 +1,11 @@
 # @mini-monorepo/package-number-one
 
+## 0.0.0-snapshot-release-20230419114348
+
+### Major Changes
+
+- [#42](https://github.com/emma-boardman/test-github-actions-flow/pull/42) [`c625670`](https://github.com/emma-boardman/test-github-actions-flow/commit/c6256705d5632949c04f95a4ef117af045095df0) Thanks [@emma-boardman](https://github.com/emma-boardman)! - bbnm,'l;
+
 ## 3.0.0
 
 ### Major Changes
