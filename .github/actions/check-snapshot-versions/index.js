@@ -23,8 +23,6 @@ const main = async () => {
       }
     }
 
-    console.log('snapshot', snapshotReleases);
-
     if (!snapshotReleases.length > 0) {
       console.log('no snapshots found')
       core.setFailed(
@@ -33,7 +31,7 @@ const main = async () => {
     }
 
     core.setOutput('SNAPSHOT_RELEASES', snapshotReleases);
-    core.setOutput('HAS_CHANGESET', snapshotReleases.length > 0);
+    core.setOutput('HAS_SNAPSHOTS', snapshotReleases.length > 0);
 }
     
 main().catch((err) => core.setFailed(err.message));

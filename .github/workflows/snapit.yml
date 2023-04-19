@@ -45,41 +45,57 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
-      - name: Generate Snapshot version
-        run: npx @changesets/cli version --snapshot snapshot-release
-        env: 
-          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-
-      - name: Check for Changeset Version Files
-        id: check-for-version-files
-        uses: ./.github/actions/check-version-files
+      - name: Check for Changeset
+        id: check-for-changeset
+        continue-on-error: true
+        run: npx @changesets/cli status --since="origin/main"
 
       - name: Create no-changeset comment
-        if: failure()
+        if: steps.check-for-changeset.outcome == 'failure'
         uses: ./.github/actions/create-pr-comment
         with: 
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           ISSUE: ${{ github.event.issue.number }}
           MESSAGE: "⚠️ **Error creating `/snapit` release** ⚠️ \n\n No changesets were found. \n\n To enable `/snapit` functionality, please add a changeset using `yarn changeset`. \n\n If you have added a changeset and are still encountering this error, please reach out in [#online-store-ui](https://shopify.slack.com/archives/CJL1EMP88)."
+
+      - name: Exit if no changeset
+        if: steps.check-for-changeset.outcome == 'failure'
+        uses: actions/github-script@v6
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          script: |
+            core.setFailed('No changeset found. To enable `/snapit` functionality, please add a changeset using `yarn changeset`. \n\n If you have added a changeset and are still encountering this error, please reach out in [#online-store-ui](https://shopify.slack.com/archives/CJL1EMP88)');
           
       - name: Add success reaction
-        if: success()
+        if: steps.check-for-changeset.outcome == 'success'
         uses: ./.github/actions/create-comment-reaction
         with:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           comment-id: ${{ github.event.comment.id }}
           reaction: "+1"
+
+      - name: Generate Snapshot version
+        id: generate-snapshot-version
+        run: npx @changesets/cli version --snapshot snapshot-release
+        env: 
+          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+
+      - name: Check for Snapshot Versions
+        id: check-for-snapshot-versions
+        uses: ./.github/actions/check-snapshot-versions
       
       - name: Create snapshot branch with version commit
         id: create-snapshot-branch
-        if: ${{ steps.check-for-version-files.outputs.HAS_CHANGESET }}
+        if: ${{ steps.check-for-version-files.outputs.HAS_SNAPSHOTS}}
+        continue-on-error: true
         uses: ./.github/actions/create-snapshot-branch
         with:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           ISSUE: ${{ github.event.issue.number }}  
 
       - name: Create branch-failure comment
-        if: failure()
+        if: ${{ !steps.check-for-version-files.outputs.HAS_SNAPSHOTS || steps.create-snapshot-branch.outcome == 'failure' }}
         uses: ./.github/actions/create-pr-comment
         with: 
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
@@ -87,7 +103,7 @@ jobs:
           MESSAGE: "⚠️ **Error creating snapshot branch** ⚠️ \n\n Please reach out in [#online-store-ui](https://shopify.slack.com/archives/CJL1EMP88)."
 
       - name: Create snapshot comment
-        if: ${{ steps.check-for-version-files.outputs.SNAPSHOT_RELEASES }}
+        if: ${{ steps.check-for-version-files.outputs.SNAPSHOT_RELEASES && steps.create-snapshot-branch.outcome == 'success'  }}
         uses: ./.github/actions/create-snapshot-comment
         with:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
