@@ -26,7 +26,12 @@ const main = async () => {
   );
 
   // read Changelog file content
-  let changelogContent = fs.readFileSync(changelogFileName).toString();
+  let changelogContent;
+  try {
+    changelogContent = fs.readFileSync(changelogFileName).toString();
+  } catch(error){
+    core.setFailed("Could not find Changelog entry for Version tag", error)
+  }
 
   // Extract the latest release content
   const newVersionIndex = changelogContent.indexOf(`\n## ${version.replace(/^v/, '')}`) + 1;
