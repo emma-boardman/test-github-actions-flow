@@ -35,11 +35,12 @@ const main = async () => {
     console.log('changelog content', changelogContent);
     
     if(changelogContent) {
+
      const releaseNotes = await getReleaseNotes();
 
      console.log('release notes', releaseNotes);
 
-     await createReleaseNotes(releaseNotes);
+     return releaseNotes ? await createReleaseNotes(releaseNotes) : null;
     }
 
   } catch(error){
@@ -52,14 +53,10 @@ const main = async () => {
 
   if (newVersionIndex === -1){
     core.setFailed(`No Changelog entries found for ${tag}`);
-  }
-
-  console.log('does this continue after failure?');
-
-  // newVersionIndex += 1;
-
+    return null;
+  } 
   const lastVersionIndex =
-    changelogContent.indexOf('\n## ', newVersionIndex + 1) - 1;
+    changelogContent.indexOf('\n## ', newVersionIndex + 1);
   const changelogEntry = changelogContent.substring(
     newVersionIndex,
     lastVersionIndex,
