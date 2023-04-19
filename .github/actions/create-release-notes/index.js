@@ -48,7 +48,16 @@ const main = async () => {
 
   async function getReleaseNotes(){
      // Extract the latest release content
-  const newVersionIndex = changelogContent.indexOf(`\n## ${version.replace(/^v/, '')}`) + 1;
+  let newVersionIndex = changelogContent.indexOf(`\n## ${version.replace(/^v/, '')}`);
+
+  if (newVersionIndex === -1){
+    core.setFailed(`No Changelog entries found for ${tag}`);
+  }
+
+  console.log('does this continue after failure?');
+
+  // newVersionIndex += 1;
+
   const lastVersionIndex =
     changelogContent.indexOf('\n## ', newVersionIndex + 1) - 1;
   const changelogEntry = changelogContent.substring(
