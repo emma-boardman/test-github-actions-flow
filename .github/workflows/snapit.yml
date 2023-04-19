@@ -87,7 +87,7 @@ jobs:
       
       - name: Create snapshot branch with version commit
         id: create-snapshot-branch
-        if: ${{ steps.check-for-version-files.outputs.HAS_SNAPSHOTS}}
+        if: ${{ steps.check-for-snapshot-versions.outputs.HAS_SNAPSHOTS}}
         continue-on-error: true
         uses: ./.github/actions/create-snapshot-branch
         with:
@@ -95,7 +95,7 @@ jobs:
           ISSUE: ${{ github.event.issue.number }}  
 
       - name: Create branch-failure comment
-        if: ${{ !steps.check-for-version-files.outputs.HAS_SNAPSHOTS || steps.create-snapshot-branch.outcome == 'failure' }}
+        if: ${{ !steps.check-for-snapshot-versions.outputs.HAS_SNAPSHOTS || steps.create-snapshot-branch.outcome == 'failure' }}
         uses: ./.github/actions/create-pr-comment
         with: 
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
@@ -108,7 +108,7 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           ISSUE: ${{ github.event.issue.number }}
-          SNAPSHOTS: ${{ steps.check-for-version-files.outputs.SNAPSHOT_RELEASES }}
+          SNAPSHOTS: ${{ steps.check-for-snapshot-versions.outputs.SNAPSHOT_RELEASES }}
   
       - name: Add rocket reaction
         if: success()
