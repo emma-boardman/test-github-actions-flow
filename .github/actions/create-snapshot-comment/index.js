@@ -14,7 +14,7 @@ const main = async () => {
   // (1) Remove brackets
   // (2) Remove double quotes
   // (3) Create array
-  snapshots = snapshots.replace(/^\[|\]$/g, '').replace(/"/g, '').split(', '); 
+  snapshots = snapshots.replace(/"([^"]*)"/g, '$1').replace("[", "").replace("]","").split(',');
 
   console.log('new snapshots', typeof snapshots, snapshots);
 
