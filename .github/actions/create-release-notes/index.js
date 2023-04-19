@@ -18,6 +18,7 @@ const main = async () => {
 
   // get the package changelog
   const changelogFileName = path.join(
+    __dirname,
     '../../..',
     'packages', 
     packageDir, 
@@ -42,7 +43,7 @@ const main = async () => {
     }
 
   } catch(error){
-    core.setFailed("Could not find Changelog entry for Version tag", error)
+    core.setFailed("Could not find Changelog entry for Version tag at file path:", changelogFileName)
   }
 
   async function getReleaseNotes(){
