@@ -29,11 +29,19 @@ const main = async () => {
   let changelogContent;
   try {
     changelogContent = fs.readFileSync(changelogFileName).toString();
+    
+    if(changelogContent) {
+     const releaseNotes = await getReleaseNotes();
+
+     await createReleaseNotes(releaseNotes);
+    }
+
   } catch(error){
     core.setFailed("Could not find Changelog entry for Version tag", error)
   }
 
-  // Extract the latest release content
+  async function getReleaseNotes(){
+     // Extract the latest release content
   const newVersionIndex = changelogContent.indexOf(`\n## ${version.replace(/^v/, '')}`) + 1;
   const lastVersionIndex =
     changelogContent.indexOf('\n## ', newVersionIndex + 1) - 1;
@@ -42,19 +50,28 @@ const main = async () => {
     lastVersionIndex,
   );
 
-
   if (!changelogEntry) {
     // we can find a changelog but not the entry for this version
     // if this is true, something has probably gone wrong
     throw new Error(`Could not find changelog entry for ${tag}`);
   }
 
-  await octokit.rest.repos.createRelease({
-    name: tag,
-    tag_name: tag,
-    body: changelogEntry,
-    ...github.context.repo,
-  });
+  return changelogEntry;
+
+  }
+
+  async function createReleaseNotes(releaseNotes){
+    
+    await octokit.rest.repos.createRelease({
+      name: tag,
+      tag_name: tag,
+      body: releaseNotes,
+      ...github.context.repo,
+    });
+
+  }
+
+ 
 };
 
 main().catch((err) => core.setFailed(err.message));
