@@ -19,7 +19,7 @@ const main = async () => {
   // get the package changelog
   const changelogFileName = path.join(
     __dirname,
-    '../../..',
+    '../..',
     'packages', 
     packageDir, 
     'CHANGELOG.md',
