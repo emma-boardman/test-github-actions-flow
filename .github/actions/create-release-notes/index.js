@@ -8,6 +8,8 @@ const main = async () => {
   const token = core.getInput('GITHUB_TOKEN');
   const tag = core.getInput('PUSHED_TAG').replace('refs/tags/', '');
 
+  console.log('are multiple tags treated as individual events or arrays?', core.getInput('PUSHED_TAG'))
+
   const octokit = github.getOctokit(token);
 
   const [version, packageName] = tag.split('@');
