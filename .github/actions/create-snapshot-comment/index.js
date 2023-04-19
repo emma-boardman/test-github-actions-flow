@@ -14,14 +14,16 @@ const main = async () => {
   // (1) Remove brackets
   // (2) Remove double quotes
   // (3) Create array
-  snapshots = snapshots.replace(/^\[|\]$/g, '').replace(/"/g, '').split(', '); 
+  snapshots = snapshots.replace(/"([^"]*)"/g, '$1').replace("[", "").replace("]","").split(',');
+
+  console.log('new snapshots', typeof snapshots, snapshots);
 
   if (snapshots.length) {
     const snapshotMarkup =  snapshots.map(tag => (
-        '```sh\n' +
-        `yarn add ${tag}\n` +
-        '```'
-      )).join('\n');
+      '```sh\n' +
+      `yarn add ${tag}\n` +
+      '```'
+    )).join('\n');
     const multiple = snapshots.length > 1
     const body = (
       `🫰✨ **Thanks @${github.context.actor}! ` +
