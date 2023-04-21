@@ -91,7 +91,7 @@ jobs:
           SNAPSHOTS: ${{ steps.check-for-snapshot-versions.outputs.SNAPSHOT_RELEASES }}
   
       - name: Add rocket reaction
-        if: success()
+        if: ${{ steps.check-for-snapshot-versions.outputs.SNAPSHOT_RELEASES && steps.create-snapshot-branch.outcome == 'success'  }}
         uses: ./.github/actions/create-comment-reaction
         with:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
