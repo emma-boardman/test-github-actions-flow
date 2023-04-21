@@ -61,7 +61,7 @@ jobs:
 
       - name: Check for Changeset
         id: check-for-changeset
-        if: ${{ !steps.check_is_version_branch.outputs.result}}
+        # if: ${{ !steps.check_is_version_branch.outputs.result}}
         continue-on-error: true
         # run: npx @changesets/cli status --since="origin/main"
         run: |
