@@ -42,7 +42,7 @@ jobs:
         if: steps.check-for-changeset.outcome == 'failure'
         uses: ./.github/actions/create-pr-comment
         with: 
-          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ISSUE: ${{ github.event.pull_request.number }}
           MESSAGE: "###  ⚠️  No Changeset found ⚠️ \n\n Merging this PR will not cause a version bump for any packages. 
           If these changes should not result in a new version, please add the `skip changelog` label. \n\n 
