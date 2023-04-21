@@ -1,5 +1,15 @@
 # @mini-monorepo/package-number-two
 
+## 0.0.0-snapshot-release-20230421164316
+
+### Minor Changes
+
+- [#65](https://github.com/emma-boardman/test-github-actions-flow/pull/65) [`b30d70e`](https://github.com/emma-boardman/test-github-actions-flow/commit/b30d70e231de30ae5b0ab07f72b1565908650a19) Thanks [@emma-boardman](https://github.com/emma-boardman)! - Change
+
+- [#60](https://github.com/emma-boardman/test-github-actions-flow/pull/60) [`6d29bcf`](https://github.com/emma-boardman/test-github-actions-flow/commit/6d29bcfc3c5f6dc2e74653f1ff6b7882835f430a) Thanks [@emma-boardman](https://github.com/emma-boardman)! - bjnlm,
+
+- [#67](https://github.com/emma-boardman/test-github-actions-flow/pull/67) [`a83ef1a`](https://github.com/emma-boardman/test-github-actions-flow/commit/a83ef1a0b7c5742a75d36dcef3632d42623b0a5e) Thanks [@emma-boardman](https://github.com/emma-boardman)! - Change
+
 ## 4.6.0
 
 ### Minor Changes
