@@ -1,5 +1,11 @@
 # @mini-monorepo/package-number-two
 
+## 4.2.0
+
+### Minor Changes
+
+- [#48](https://github.com/emma-boardman/test-github-actions-flow/pull/48) [`b30a279`](https://github.com/emma-boardman/test-github-actions-flow/commit/b30a279249b7713aacc5cf0c16930e14702050b3) Thanks [@emma-boardman](https://github.com/emma-boardman)! - Thing
+
 ## 4.1.0
 
 ### Minor Changes
