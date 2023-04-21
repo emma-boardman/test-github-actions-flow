@@ -5,7 +5,7 @@ export function Button(){
      <button type="button" id="1">Awesome button....</button>
      <button type="button" id="1">Awesome button....</button>
      <button type="button" id="1">Awesome button....</button>
-     <button type="button" id="1">Awesome button....</button>
+
    
 
     </>
