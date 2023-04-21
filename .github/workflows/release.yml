@@ -7,8 +7,6 @@ on:
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
-permissions: write-all
-
 jobs:
   run-changesets:
     name: Run changeset actions
@@ -22,7 +20,7 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v3
         with:
-          token: ${{ secrets.ACCESS_TOKEN }}
+          token: ${{ secrets.MONOREPO_TEST }}
 
       - name: Free up space on GitHub image
         run: |
@@ -49,12 +47,12 @@ jobs:
       - name: Generate changelog and update versions
         run: npx @changesets/cli version
         env: 
-          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          MONOREPO_TEST: ${{ secrets.MONOREPO_TEST }}
 
       - name: Create or update Release PR
         id: create_update_release_branch
         # if: steps.check_changesets_change.outcome != 'failure'
         uses: ./.github/actions/create-update-release-pr-action
         with:
-          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          MONOREPO_TEST: ${{ secrets.MONOREPO_TEST }}
 
