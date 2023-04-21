@@ -42,15 +42,56 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
 
+      - name: Check if PR branch is Version or Feature
+        id: check_is_version_branch
+        uses: actions/github-script@v6
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          script: |
+            const {getExecOutput} = require('@actions/exec');
+
+            const currentBranch = await getExecOutput('git', ['branch', '--show-current']);
+
+            if (currentBranch == 'changeset-release/main') {
+              console.log('version branch');
+              core.setOutput('IS_VERSION_BRANCH', true)
+            } else {
+              console.log('feature branch');
+               core.setOutput('IS_VERSION_BRANCH', false)
+            }
+
+      - name: Check for Changeset
+        id: check-for-changeset
+        if: ${{ !steps.check_is_version_branch.outputs.IS_VERSION_BRANCH}}
+        continue-on-error: true
+        run: npx @changesets/cli status --since="origin/main"
+
+      - name: Create no-changeset comment if !VersionPackage PR
+        if: steps.check-for-changeset.outcome == 'failure'
+        uses: ./.github/actions/create-pr-comment
+        with: 
+          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          ISSUE: ${{ github.event.issue.number }}
+          MESSAGE: "⚠️ **Error creating `/snapit` release** ⚠️ \n\n No changesets were found. \n\n To enable `/snapit` functionality, please add a changeset using `yarn changeset`. \n\n If you have added a changeset and are still encountering this error, please reach out in [#online-store-ui](https://shopify.slack.com/archives/CJL1EMP88)."
+
+      - name: Exit if no changeset
+        if: steps.check-for-changeset.outcome == 'failure'
+        uses: actions/github-script@v6
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          script: |
+            core.setFailed('No changeset found. To enable `/snapit` functionality, please add a changeset using `yarn changeset`. \n\n If you have added a changeset and are still encountering this error, please reach out in [#online-store-ui](https://shopify.slack.com/archives/CJL1EMP88)');
+
       # Because changeset entries are consumed and removed on the
       # 'changeset-release/main' branch, we need to reset the files
       # so the following 'changeset version --snapshot' command will
       # regenerate the package version bumps with the snapshot releases
       - name: Reset changeset entries on changeset-release/main branch
+        if: steps.check_is_version_branch.outputs.IS_VERSION_BRANCH
         run: |
-          if [[ $(git branch --show-current) == 'changeset-release/main' ]]; then
-            git checkout origin/main -- .changeset
-          fi
+          git checkout origin/main -- .changeset
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile
