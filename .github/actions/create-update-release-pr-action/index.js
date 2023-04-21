@@ -89,7 +89,7 @@ function getFileContentForCommit(versionFiles) {
     // Otherwise, capture local file changes for commit
     return {
       ...obj,
-      [name]: status === 'D' ? '' : getFileContent(name),
+      [name]: status.includes('D') ? '' : getFileContent(name),
     };
   }, {});
 
