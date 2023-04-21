@@ -48,7 +48,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          result-encoding: string
           script: |
             const currentBranch = await exec.getExecOutput('git', ['branch', '--show-current']);
 
@@ -60,9 +59,13 @@ jobs:
                return false
             }
 
+      - name: Check output
+        run: |
+          echo ${{ steps.check_is_version_branch.outputs.result }}
+
       - name: Check for Changeset
         id: check-for-changeset
-        if: ${{ steps.check_is_version_branch.outputs.result == 'false'}}
+        if: steps.check_is_version_branch.outputs.result == 'false'
         continue-on-error: true
         run: npx @changesets/cli status --since="origin/main"
 
