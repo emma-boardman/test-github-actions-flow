@@ -6,6 +6,8 @@ on:
       - created
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
+permissions: read-all|write-all
+
 jobs:
   snapshot:
     name: Create Snapshot Release
