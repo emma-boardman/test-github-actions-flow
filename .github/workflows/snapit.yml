@@ -49,9 +49,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           script: |
-            const {getExecOutput} = require('@actions/exec');
-
-            const currentBranch = await getExecOutput('git', ['branch', '--show-current']);
+            const currentBranch = await exec.getExecOutput('git', ['branch', '--show-current']);
 
             if (currentBranch == 'changeset-release/main') {
               console.log('version branch');
