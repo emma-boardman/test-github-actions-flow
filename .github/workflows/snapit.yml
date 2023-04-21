@@ -63,7 +63,8 @@ jobs:
         id: check-for-changeset
         if: ${{ !steps.check_is_version_branch.outputs.IS_VERSION_BRANCH}}
         continue-on-error: true
-        run: npx @changesets/cli status --since="origin/main"
+        # run: npx @changesets/cli status --since="origin/main"
+        run: echo ${{ steps.check_is_version_branch.outputs.IS_VERSION_BRANCH }}
 
       - name: Create no-changeset comment if !VersionPackage PR
         if: steps.check-for-changeset.outcome == 'failure'

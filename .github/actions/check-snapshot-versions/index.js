@@ -16,7 +16,6 @@ const main = async () => {
       const pkgName = packageJson.name;
       const localVersion = packageJson.version;
 
-      console.log('packages', packages);
 
       if (localVersion.includes('snapshot')){
         snapshotReleases.push(`${pkgName}@${localVersion}`);
