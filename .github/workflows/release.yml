@@ -11,16 +11,13 @@ jobs:
   run-changesets:
     name: Run changeset actions
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pull-requests: write
     # outputs:
       # changeset-has-changed: ${{ steps.check-changesets-change.outputs.changed }}
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v3
         with:
-          token: ${{ secrets.MONOREPO_TEST }}
+          token: ${{ secrets.ACCESS_TOKEN }}
 
       - name: Free up space on GitHub image
         run: |
@@ -47,12 +44,12 @@ jobs:
       - name: Generate changelog and update versions
         run: npx @changesets/cli version
         env: 
-          MONOREPO_TEST: ${{ secrets.MONOREPO_TEST }}
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
 
       - name: Create or update Release PR
         id: create_update_release_branch
         # if: steps.check_changesets_change.outcome != 'failure'
         uses: ./.github/actions/create-update-release-pr-action
         with:
-          MONOREPO_TEST: ${{ secrets.MONOREPO_TEST }}
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
 
