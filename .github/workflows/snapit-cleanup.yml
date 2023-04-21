@@ -28,5 +28,5 @@ jobs:
       - name: Check for & delete corresponding snapshot branch
         uses: ./.github/actions/delete-snapshot-branch
         with:
-          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           FEATURE_BRANCH: ${{ github.head_ref }}

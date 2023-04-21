@@ -14,7 +14,7 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v3
         with:
-          token: ${{ secrets.ACCESS_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup Node with v16.13.0
         uses: actions/setup-node@v3
@@ -30,4 +30,4 @@ jobs:
         uses: ./.github/actions/create-release-notes
         with:
           PUSHED_TAG: ${{ github.ref }}
-          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
