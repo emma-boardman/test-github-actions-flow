@@ -52,6 +52,10 @@ jobs:
           script: |
             const currentBranch = await exec.getExecOutput('git', ['branch', '--show-current']);
 
+            console.log('current branch', currentBranch);
+
+
+
             if (currentBranch.includes('changeset-release/main')) {
               console.log('version branch', currentBranch);
               return true
