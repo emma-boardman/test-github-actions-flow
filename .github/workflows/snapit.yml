@@ -45,36 +45,6 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
-      - name: Check for Changeset
-        id: check-for-changeset
-        continue-on-error: true
-        run: npx @changesets/cli status --since="origin/main"
-
-      - name: Create no-changeset comment
-        if: steps.check-for-changeset.outcome == 'failure'
-        uses: ./.github/actions/create-pr-comment
-        with: 
-          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-          ISSUE: ${{ github.event.issue.number }}
-          MESSAGE: "⚠️ **Error creating `/snapit` release** ⚠️ \n\n No changesets were found. \n\n To enable `/snapit` functionality, please add a changeset using `yarn changeset`. \n\n If you have added a changeset and are still encountering this error, please reach out in [#online-store-ui](https://shopify.slack.com/archives/CJL1EMP88)."
-
-      - name: Exit if no changeset
-        if: steps.check-for-changeset.outcome == 'failure'
-        uses: actions/github-script@v6
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          script: |
-            core.setFailed('No changeset found. To enable `/snapit` functionality, please add a changeset using `yarn changeset`. \n\n If you have added a changeset and are still encountering this error, please reach out in [#online-store-ui](https://shopify.slack.com/archives/CJL1EMP88)');
-          
-      - name: Add success reaction
-        if: steps.check-for-changeset.outcome == 'success'
-        uses: ./.github/actions/create-comment-reaction
-        with:
-          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-          comment-id: ${{ github.event.comment.id }}
-          reaction: "+1"
-
       - name: Generate Snapshot version
         id: generate-snapshot-version
         run: npx @changesets/cli version --snapshot snapshot-release
