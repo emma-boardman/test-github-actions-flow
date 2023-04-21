@@ -52,13 +52,11 @@ jobs:
           script: |
             const currentBranch = await exec.getExecOutput('git', ['branch', '--show-current']);
 
-            console.log('current branch', currentBranch);
-
-            if (currentBranch.stdout =='changeset-release/main') {
-              console.log('version branch', currentBranch);
+            if (currentBranch?.stdout?.includes('changeset-release/main')) {
+              console.log('is version branch', currentBranch);
               return true
             } else {
-              console.log('feature branch', currentBranch);
+              console.log('is feature branch', currentBranch);
                return false
             }
 
