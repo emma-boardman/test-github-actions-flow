@@ -31,7 +31,7 @@ jobs:
       - name: Add initial reaction
         uses: ./.github/actions/create-comment-reaction
         with:
-          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           comment-id: ${{ github.event.comment.id }}
           reaction: eyes
 
@@ -40,13 +40,13 @@ jobs:
       - name: Checkout pull request branch
         run: hub pr checkout ${{ github.event.issue.number }}
         env:
-          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
 
       - name: Check if PR branch is Version Release
         id: check_is_version_branch
         uses: actions/github-script@v6
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
         with:
           result-encoding: string
           script: |
@@ -71,7 +71,7 @@ jobs:
         if: steps.check-for-changeset.outcome == 'failure'
         uses: ./.github/actions/create-pr-comment
         with: 
-          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           ISSUE: ${{ github.event.issue.number }}
           MESSAGE: "⚠️ **Error creating `/snapit` release** ⚠️ \n\n No changesets were found. \n\n To enable `/snapit` functionality, please add a changeset using `yarn changeset`. \n\n If you have added a changeset and are still encountering this error, please reach out in [#online-store-ui](https://shopify.slack.com/archives/CJL1EMP88)."
 
@@ -79,7 +79,7 @@ jobs:
         if: steps.check-for-changeset.outcome == 'failure'
         uses: actions/github-script@v6
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
         with:
           script: |
             core.setFailed('No changeset found. To enable `/snapit` functionality, please add a changeset using `yarn changeset`. \n\n If you have added a changeset and are still encountering this error, please reach out in [#online-store-ui](https://shopify.slack.com/archives/CJL1EMP88)');
@@ -100,7 +100,7 @@ jobs:
         id: generate-snapshot-version
         run: npx @changesets/cli version --snapshot snapshot-release
         env: 
-          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
 
       - name: Check for Snapshot Versions
         id: check-for-snapshot-versions
@@ -112,14 +112,14 @@ jobs:
         continue-on-error: true
         uses: ./.github/actions/create-snapshot-branch
         with:
-          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           ISSUE: ${{ github.event.issue.number }}  
 
       - name: Create branch-failure comment
         if: ${{ !steps.check-for-snapshot-versions.outputs.HAS_SNAPSHOTS || steps.create-snapshot-branch.outcome == 'failure' }}
         uses: ./.github/actions/create-pr-comment
         with: 
-          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           ISSUE: ${{ github.event.issue.number }}
           MESSAGE: "⚠️ **Error creating snapshot branch** ⚠️ \n\n Please reach out in [#online-store-ui](https://shopify.slack.com/archives/CJL1EMP88)."
 
@@ -127,7 +127,7 @@ jobs:
         if: ${{ steps.check-for-snapshot-versions.outputs.SNAPSHOT_RELEASES && steps.create-snapshot-branch.outcome == 'success'  }}
         uses: ./.github/actions/create-snapshot-comment
         with:
-          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           ISSUE: ${{ github.event.issue.number }}
           SNAPSHOTS: ${{ steps.check-for-snapshot-versions.outputs.SNAPSHOT_RELEASES }}
   
@@ -135,6 +135,6 @@ jobs:
         if: ${{ steps.check-for-snapshot-versions.outputs.SNAPSHOT_RELEASES && steps.create-snapshot-branch.outcome == 'success'  }}
         uses: ./.github/actions/create-comment-reaction
         with:
-          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           comment-id: ${{ github.event.comment.id }}
           reaction: rocket
