@@ -48,7 +48,7 @@ async function createReleaseBranch(octokit) {
       ...github.context.repo,
     });
 
-    await createBranchRef(snapshotBranch, lastCommit);
+    return await createBranchRef(snapshotBranch, lastCommit);
   } catch (error) {
     // if branch does not exist, create new branch with the latest commit
     if (error.name === 'HttpError' && error.status === 404) {
