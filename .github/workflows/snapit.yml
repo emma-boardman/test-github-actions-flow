@@ -42,7 +42,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
 
-      - name: Check if PR branch is Version or Feature
+      - name: Check if PR branch is Version Release
         id: check_is_version_branch
         uses: actions/github-script@v6
         env:
@@ -53,15 +53,15 @@ jobs:
 
             if (currentBranch == 'changeset-release/main') {
               console.log('version branch');
-              core.setOutput('IS_VERSION_BRANCH', true)
+              return true
             } else {
               console.log('feature branch');
-               core.setOutput('IS_VERSION_BRANCH', false)
+               return false
             }
 
       - name: Check for Changeset
         id: check-for-changeset
-        if: ${{ !steps.check_is_version_branch.outputs.IS_VERSION_BRANCH}}
+        if: ${{ !steps.check_is_version_branch.outputs.result}}
         continue-on-error: true
         # run: npx @changesets/cli status --since="origin/main"
         run: echo ${{ steps.check_is_version_branch.outputs.IS_VERSION_BRANCH }}
