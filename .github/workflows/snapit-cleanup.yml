@@ -33,7 +33,7 @@ jobs:
           FEATURE_BRANCH: ${{ github.head_ref }}
 
       - name: Delete corresponding snapshot branch
-        if: ${{ steps.check-snapshot-branch.outputs.HAS_SNAPSHOT_BRANCH}}
+        if: ${{ steps.check-snapshot-branch.outputs.HAS_SNAPSHOT_BRANCH == 'true' }}
         uses: ./.github/actions/delete-snapshot-branch
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
