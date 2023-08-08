@@ -1,0 +1,14 @@
+name: 'Check for snapshot branch'
+branding:
+  icon: shopping-bag
+  colour: green
+inputs:
+  GITHUB_TOKEN:
+    description: 'GitHub access token'
+    required: true
+  FEATURE_BRANCH:
+    descripton: 'Feature branch name'
+    required: true
+runs:
+  using: 'node16'
+  main: 'index.js'
