@@ -25,7 +25,15 @@ jobs:
         working-directory: .github/actions
         run: yarn install --frozen-lockfile
 
-      - name: Check for & delete corresponding snapshot branch
+      - name: Check for corresponding snapshot branch
+        id: check-snapshot-branch
+        uses: ./.github/actions/check-snapshot-branch
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          FEATURE_BRANCH: ${{ github.head_ref }}
+
+      - name: Delete corresponding snapshot branch
+        if: ${{ steps.check-snapshot-branch.outputs.HAS_SNAPSHOT_BRANCH}}
         uses: ./.github/actions/delete-snapshot-branch
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
