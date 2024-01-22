@@ -94,7 +94,7 @@ jobs:
           git checkout origin/main -- .changeset
 
       - name: Install @changesets/changelog-github dependency
-        run: yarn add @changesets/changelog-github
+        run: yarn add --ignore-workspace-root-check @changesets/changelog-github
 
       - name: Generate Snapshot version
         id: generate-snapshot-version
