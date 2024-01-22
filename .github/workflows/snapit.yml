@@ -93,6 +93,9 @@ jobs:
         run: |
           git checkout origin/main -- .changeset
 
+      - name: Install @changesets/changelog-github dependency
+        run: yarn add @changesets/changelog-github
+
       - name: Generate Snapshot version
         id: generate-snapshot-version
         run: npx @changesets/cli version --snapshot snapshot-release
