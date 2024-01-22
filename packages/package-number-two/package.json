@@ -1,6 +1,6 @@
 {
     "name": "@mini-monorepo/package-number-two",
-    "version": "4.6.0",
+    "version": "0.0.0-snapshot-release-20240122144539",
     "main": "index.js",
     "repository": "https://github.com/emma-boardman/test-github-actions-flow.git",
     "author": "Emma Boardman <emma.boardman@shopify.com>",

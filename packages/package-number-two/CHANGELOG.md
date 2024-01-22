@@ -1,5 +1,37 @@
 # @mini-monorepo/package-number-two
 
+## 0.0.0-snapshot-release-20240122144539
+
+### Minor Changes
+
+- [#65](https://github.com/emma-boardman/test-github-actions-flow/pull/65) [`b30d70e`](https://github.com/emma-boardman/test-github-actions-flow/commit/b30d70e231de30ae5b0ab07f72b1565908650a19) Thanks [@emma-boardman](https://github.com/emma-boardman)! - Change
+
+- [#60](https://github.com/emma-boardman/test-github-actions-flow/pull/60) [`6d29bcf`](https://github.com/emma-boardman/test-github-actions-flow/commit/6d29bcfc3c5f6dc2e74653f1ff6b7882835f430a) Thanks [@emma-boardman](https://github.com/emma-boardman)! - bjnlm,
+
+- [#70](https://github.com/emma-boardman/test-github-actions-flow/pull/70) [`c51c03c`](https://github.com/emma-boardman/test-github-actions-flow/commit/c51c03c9b3db3a5915dcc0c52e2681c9a55c4e4f) Thanks [@emma-boardman](https://github.com/emma-boardman)! - vuybnm,
+
+- [#71](https://github.com/emma-boardman/test-github-actions-flow/pull/71) [`ee0ef52`](https://github.com/emma-boardman/test-github-actions-flow/commit/ee0ef52c0519c8f36bff0b381035e22d1bacff14) Thanks [@emma-boardman](https://github.com/emma-boardman)! - Maybe?
+
+- [#69](https://github.com/emma-boardman/test-github-actions-flow/pull/69) [`011c731`](https://github.com/emma-boardman/test-github-actions-flow/commit/011c7310b5e30038ab0f1fe9f90de0c49597530d) Thanks [@emma-boardman](https://github.com/emma-boardman)! - Yay
+
+### Patch Changes
+
+- [#80](https://github.com/emma-boardman/test-github-actions-flow/pull/80) [`97a0c3c`](https://github.com/emma-boardman/test-github-actions-flow/commit/97a0c3c5dc7ce6620f7b01c504aabff2cfa3cb03) Thanks [@emma-boardman](https://github.com/emma-boardman)! - Test with updated command
+
+- [#81](https://github.com/emma-boardman/test-github-actions-flow/pull/81) [`ccd09d6`](https://github.com/emma-boardman/test-github-actions-flow/commit/ccd09d6d9de006e1170e92013b434743b14475eb) Thanks [@emma-boardman](https://github.com/emma-boardman)! - Test snapit without the global install
+
+- [#73](https://github.com/emma-boardman/test-github-actions-flow/pull/73) [`dcb3836`](https://github.com/emma-boardman/test-github-actions-flow/commit/dcb38366214404885227d28b749f340a8a7a312b) Thanks [@emma-boardman](https://github.com/emma-boardman)! - vbinm,
+
+- [#68](https://github.com/emma-boardman/test-github-actions-flow/pull/68) [`37c3174`](https://github.com/emma-boardman/test-github-actions-flow/commit/37c3174db81efea9bc08bd258369ee570a616e20) Thanks [@emma-boardman](https://github.com/emma-boardman)! - bidnvflfdf
+
+- [#79](https://github.com/emma-boardman/test-github-actions-flow/pull/79) [`643123c`](https://github.com/emma-boardman/test-github-actions-flow/commit/643123ccb39686944ce3f67533c5e7cacc516981) Thanks [@emma-boardman](https://github.com/emma-boardman)! - Test current snapit workflow works
+
+- [#72](https://github.com/emma-boardman/test-github-actions-flow/pull/72) [`c2f5d3c`](https://github.com/emma-boardman/test-github-actions-flow/commit/c2f5d3c4e544e82077754c5fcbf12776033e54ce) Thanks [@emma-boardman](https://github.com/emma-boardman)! - vybiunoim,
+
+- [#82](https://github.com/emma-boardman/test-github-actions-flow/pull/82) [`d95a0e3`](https://github.com/emma-boardman/test-github-actions-flow/commit/d95a0e3cee3827acfbdac56ac984587eb84dd7e4) Thanks [@emma-boardman](https://github.com/emma-boardman)! - Test with explicit dep added to workflow
+
+- [#78](https://github.com/emma-boardman/test-github-actions-flow/pull/78) [`c60472f`](https://github.com/emma-boardman/test-github-actions-flow/commit/c60472f30d2845b5680913114242a01e172e63f8) Thanks [@emma-boardman](https://github.com/emma-boardman)! - Test
+
 ## 4.6.0
 
 ### Minor Changes
