@@ -1,5 +1,13 @@
 # @mini-monorepo/package-number-two
 
+## 4.7.1
+
+### Patch Changes
+
+- [#89](https://github.com/emma-boardman/test-github-actions-flow/pull/89) [`978da9015fd077f0e1af80a95088d326882bcf79`](https://github.com/emma-boardman/test-github-actions-flow/commit/978da9015fd077f0e1af80a95088d326882bcf79) Thanks [@emma-boardman](https://github.com/emma-boardman)! - Install locally in actions folder, update config path
+
+- [#90](https://github.com/emma-boardman/test-github-actions-flow/pull/90) [`4096f7acc21634c9c5cc0cb58ae849a87887dd0e`](https://github.com/emma-boardman/test-github-actions-flow/commit/4096f7acc21634c9c5cc0cb58ae849a87887dd0e) Thanks [@emma-boardman](https://github.com/emma-boardman)! - Test with actions dep
+
 ## 4.7.0
 
 ### Minor Changes
