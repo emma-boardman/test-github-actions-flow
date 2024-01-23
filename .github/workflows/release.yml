@@ -33,10 +33,7 @@ jobs:
         with:
           node-version: 16.x
           cache: 'yarn'
-
-      - name: Install changeset cli
-        run: yarn install --frozen-lockfile
-
+          
       - name: Install Dependencies for create-update-release-pr-action
         working-directory: .github/actions/create-update-release-pr-action
         run: yarn install --frozen-lockfile
