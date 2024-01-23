@@ -21,6 +21,10 @@ jobs:
         with:
           node-version: 16.x
           cache: 'yarn'
+
+      - name: Install Dependencies for osui-github actions
+        working-directory: .github/actions
+        run: yarn install --frozen-lockfile
         
       - name: Install Dependencies for create-release-notes
         working-directory: .github/actions/create-release-notes
