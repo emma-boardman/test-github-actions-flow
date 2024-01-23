@@ -1,7 +1,7 @@
 {
   "$schema": "https://unpkg.com/@changesets/config@2.3.0/schema.json",
     "changelog": [
-    "../node_modules/@changesets/changelog-github",
+    "../.github/actions/node_modules/@changesets/changelog-github",
     {
       "repo": "emma-boardman/test-github-actions-flow"
     }
