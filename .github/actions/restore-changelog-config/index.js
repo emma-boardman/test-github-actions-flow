@@ -23,7 +23,7 @@ async function getCurrentBranchRefs(octokit, issue) {
 
     console.log('data', data);
 
-    return data.head.sha;
+    return data.head.ref;
   } catch (error) {
     core.setFailed('Error retrieving current branch info:', error);
   }
