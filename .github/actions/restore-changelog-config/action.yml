@@ -9,6 +9,9 @@ inputs:
   GITHUB_TOKEN:
     description: 'GitHub access token'
     required: true
+  ISSUE:
+    description: 'Github issue number'
+    required: true
   CONFIG_PATH:
     description: 'Path to changelog config.json'
     required: true
