@@ -21,6 +21,8 @@ async function getCurrentBranchRefs(octokit, issue) {
       ...github.context.repo,
     });
 
+    console.log('data', data);
+
     return data.head.sha;
   } catch (error) {
     core.setFailed('Error retrieving current branch info:', error);
@@ -33,6 +35,7 @@ async function restoreConfigFile(
   configPath,
   configContent,
 ) {
+  console.log('args', lastCommitRef, configPath, configContent);
   try {
     const response = await octokit.rest.git.updateRef({
       ref: lastCommitRef,
