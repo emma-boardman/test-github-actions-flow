@@ -1,0 +1,10 @@
+# Workaround for changeset/cli bug
+# https://github.com/changesets/changesets/issues/945
+
+name: 'Update changelog config path'
+branding:
+  icon: shopping-bag
+  colour: green
+runs:
+  using: 'node16'
+  main: 'index.js'cd
