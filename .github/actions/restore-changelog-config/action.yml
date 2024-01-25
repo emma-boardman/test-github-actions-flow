@@ -1,0 +1,20 @@
+# Workaround for changeset/cli bug
+# https://github.com/changesets/changesets/issues/945
+
+name: 'Restore changelog config path'
+branding:
+  icon: shopping-bag
+  colour: green
+inputs:
+  GITHUB_TOKEN:
+    description: 'GitHub access token'
+    required: true
+  CONFIG_PATH:
+    description: 'Path to changelog config.json'
+    required: true
+  CONFIG_CONTENT:
+    description: 'Original changelog config.json content'
+    required: true
+runs:
+  using: 'node16'
+  main: 'index.js'

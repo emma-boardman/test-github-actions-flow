@@ -42,10 +42,22 @@ jobs:
         working-directory: .github/actions/create-update-release-pr-action
         run: yarn install --frozen-lockfile
 
+      - name: Update changelog config path
+        id: update-changelog-config-path
+        uses: ./.github/actions/update-changelog-config
+
       - name: Generate changelog and update versions
         run: npx @changesets/cli version
         env: 
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Restore changelog config path
+        uses: ./.github/actions/restore-changelog-config
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE: ${{ github.event.issue.number }}
+          CONFIG_PATH: ${{ steps.update-changelog-config-path.outputs.CONFIG_PATH }}
+          CONFIG_CONTENT: ${{ steps.update-changelog-config-path.outputs.CONFIG_CONTENT }}
 
       - name: Create or update Release PR
         id: create_update_release_branch
