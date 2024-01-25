@@ -7,4 +7,4 @@ branding:
   colour: green
 runs:
   using: 'node16'
-  main: 'index.js'cd
+  main: 'index.js'
