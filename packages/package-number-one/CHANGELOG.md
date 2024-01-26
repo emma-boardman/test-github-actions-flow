@@ -1,5 +1,13 @@
 # @mini-monorepo/package-number-one
 
+## 3.0.3
+
+### Patch Changes
+
+- [#95](https://github.com/emma-boardman/test-github-actions-flow/pull/95) [`fa330348e9f746166a6e8bfc3a79b50633bf6801`](https://github.com/emma-boardman/test-github-actions-flow/commit/fa330348e9f746166a6e8bfc3a79b50633bf6801) Thanks [@emma-boardman](https://github.com/emma-boardman)! - Testing new actions
+
+- [#94](https://github.com/emma-boardman/test-github-actions-flow/pull/94) [`3461268dfbbd8f9c176474d046634f2914f6d328`](https://github.com/emma-boardman/test-github-actions-flow/commit/3461268dfbbd8f9c176474d046634f2914f6d328) Thanks [@emma-boardman](https://github.com/emma-boardman)! - Test
+
 ## 3.0.2
 
 ### Patch Changes
