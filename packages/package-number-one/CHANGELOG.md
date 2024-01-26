@@ -1,5 +1,11 @@
 # @mini-monorepo/package-number-one
 
+## 3.0.4
+
+### Patch Changes
+
+- [#99](https://github.com/emma-boardman/test-github-actions-flow/pull/99) [`1a675c941bed65f84ec3f9fbf8d106c2b9e44ce8`](https://github.com/emma-boardman/test-github-actions-flow/commit/1a675c941bed65f84ec3f9fbf8d106c2b9e44ce8) Thanks [@emma-boardman](https://github.com/emma-boardman)! - Tophat updated release flows
+
 ## 3.0.3
 
 ### Patch Changes
