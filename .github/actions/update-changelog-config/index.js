@@ -11,7 +11,7 @@ const main = async () => {
 
   const yarnGlobalDir = await getYarnGlobalDir();
 
-  await updateConfigPath(yarnGlobalDir.trim());
+  await updateChangelogPath(yarnGlobalDir.trim());
 };
 
 async function addGlobalPackage() {
@@ -30,7 +30,7 @@ async function getYarnGlobalDir() {
   }
 }
 
-async function updateConfigPath(yarnGlobalDir) {
+async function updateChangelogPath(yarnGlobalDir) {
   const configFilePath = path.resolve(
     __dirname,
     '../../../.changeset/config.json',
