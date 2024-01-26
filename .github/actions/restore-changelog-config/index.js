@@ -6,7 +6,7 @@ const main = async () => {
   const originalConfigContent = core.getInput('CONFIG_CONTENT');
 
   try {
-    fs.writeFileSync(configFilePath, originalConfigContent);
+    fs.writeFileSync(configFilePath, originalConfigContent.trim());
   } catch (error) {
     core.setFailed(`Error restoring changelog path: ${error.message}`);
   }
