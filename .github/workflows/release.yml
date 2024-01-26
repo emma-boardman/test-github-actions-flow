@@ -54,8 +54,6 @@ jobs:
       - name: Restore changelog config path
         uses: ./.github/actions/restore-changelog-config
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          ISSUE: ${{ github.event.issue.number }}
           CONFIG_PATH: ${{ steps.update-changelog-config-path.outputs.CONFIG_PATH }}
           CONFIG_CONTENT: ${{ steps.update-changelog-config-path.outputs.CONFIG_CONTENT }}
 
