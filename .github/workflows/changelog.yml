@@ -21,10 +21,10 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup Node with v16.13.0
-        uses: actions/setup-node@v3
+      - name: Setup Node with v20.0.0
+        uses: actions/setup-node@v4
         with:
-          node-version: 16.x
+          node-version: 20.x
           cache: 'yarn'
 
       - name: Check for Changeset
