@@ -7,5 +7,5 @@ inputs:
     description: 'GitHub access token'
     required: true
 runs:
-  using: 'node16'
+  using: 'node20'
   main: 'index.js'
