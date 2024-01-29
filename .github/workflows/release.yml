@@ -44,8 +44,9 @@ jobs:
 
       - name: Workaround for changeset/cli bug
         run: |
-          yarn config set prefix node_modules
-          yarn global add @changesets/changelog-github
+          mv package.json package.bak
+          npm install @changesets/changelog-github --no-save
+          mv package.bak package.json
 
       - name: Generate changelog and update versions
         run: npx @changesets/cli version
