@@ -1,5 +1,15 @@
 # @mini-monorepo/package-number-one
 
+## 3.0.5
+
+### Patch Changes
+
+- [#100](https://github.com/emma-boardman/test-github-actions-flow/pull/100) [`a4c9d78`](https://github.com/emma-boardman/test-github-actions-flow/commit/a4c9d789731c1802c4cbb16a300bb2f052b538cd) Thanks [@emma-boardman](https://github.com/emma-boardman)! - Add extra awesome button
+
+- [#104](https://github.com/emma-boardman/test-github-actions-flow/pull/104) [`c36b253`](https://github.com/emma-boardman/test-github-actions-flow/commit/c36b2531408bba827730b90cc8181764a57b08bf) Thanks [@emma-boardman](https://github.com/emma-boardman)! - Added private repo to replicate 401 error
+
+- [#106](https://github.com/emma-boardman/test-github-actions-flow/pull/106) [`435e74c`](https://github.com/emma-boardman/test-github-actions-flow/commit/435e74c7c4954ff3ae2679902008313362663efb) Thanks [@emma-boardman](https://github.com/emma-boardman)! - Test mv and no-save workflows
+
 ## 3.0.4
 
 ### Patch Changes
