@@ -336,6 +336,16 @@
     estree-walker "^2.0.2"
     picomatch "^2.3.1"
 
+"@shopify/editor-core@0.0.0-snapshot-release-20240123112536":
+  version "0.0.0-snapshot-release-20240123112536"
+  resolved "https://npm.shopify.io/node/@shopify/editor-core/-/0.0.0-snapshot-release-20240123112536/editor-core-0.0.0-snapshot-release-20240123112536.tgz#2285c1fbdfd10582133a2ab367537e4af2572640"
+  integrity sha512-CM8Q+6YRN5DIsi6tYlGHN7zCYD3VjOmaGwNwSC8oZAZXbjr3DV/iTxKTJINpC/TtaZjv6QuH5AS3uzVpqJf7yQ==
+
+"@shopify/editor-core@0.0.0-snapshot-release-20240123141931":
+  version "0.0.0-snapshot-release-20240123141931"
+  resolved "https://npm.shopify.io/node/@shopify/editor-core/-/0.0.0-snapshot-release-20240123141931/editor-core-0.0.0-snapshot-release-20240123141931.tgz#c4767af525b72616f269d2c97237f0a76e9e010c"
+  integrity sha512-Dm3MLDnkcXdCCxH/Mb4a37I09jR/riq1tYvqFMpINKcWPtJziAsbxoUWcKY4vxlgQrW3CGJjXamKCaAONLPqaQ==
+
 "@types/estree@*", "@types/estree@^1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@types/estree/-/estree-1.0.0.tgz#5fb2e536c1ae9bf35366eed879e827fa59ca41c2"
