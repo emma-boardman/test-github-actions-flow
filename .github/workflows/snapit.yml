@@ -93,6 +93,9 @@ jobs:
         run: |
           git checkout origin/main -- .changeset
 
+      - name: Test for 401 error 
+        run: yarn install --frozen-lockfile
+
       - name: Workaround for changeset/cli bug
         run: |
           mv package.json package.bak
